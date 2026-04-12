@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Waking | The Way</title>
+<meta name="description" content="Stage I. The recognition that you have been asleep. That the life you are living was built on a foundation you did not choose. That the voice in your head is not your voice.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #060608;
+    --text: #d6d1c6;
+    --dim: #6e6960;
+    --warm: #c9b68a;
+    --warm2: #b8a070;
+    --warm-faint: rgba(201,182,138,0.04);
+    --light-bg: #f5f1e9;
+    --light-text: #1c1a17;
+    --light-dim: #908a7e;
+    --light-warm: #8e7a50;
+    --pre-bg: #18160f;
+    --pre-text: #d2ccbf;
+    --pre-dim: #7a7468;
+    --pre-warm: #b89e6e;
+    --serif: 'Cormorant Garamond', Georgia, serif;
+    --sans: 'DM Sans', sans-serif;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--serif);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  ::selection { background: var(--warm); color: var(--bg); }
+
+  /* Grain */
+  body::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    z-index: 200;
+    pointer-events: none;
+    opacity: 0.032;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    background-repeat: repeat;
+    background-size: 200px;
+  }
+
+  /* Navigation */
+  .way-nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
+    padding: 1.4rem clamp(1.5rem, 4vw, 3rem);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: clamp(1.2rem, 3vw, 2.2rem);
+    background: linear-gradient(to bottom, rgba(6,6,8,0.92) 0%, rgba(6,6,8,0.6) 70%, transparent 100%);
+  }
+
+  .way-nav a {
+    font-family: var(--sans);
+    font-size: 0.55rem;
+    font-weight: 400;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    text-decoration: none;
+    color: var(--dim);
+    transition: color 0.3s;
+  }
+
+  .way-nav a:hover { color: var(--text); }
+
+  /* Sections */
+  .section {
+    padding: clamp(4rem, 10vw, 8rem) clamp(1.5rem, 6vw, 5rem);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .section-inner {
+    max-width: 660px;
+    width: 100%;
+    margin: 0 auto;
+    position: relative;
+    z-index: 3;
+  }
+
+  /* Atmospheres */
+  .atm-v::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse 60% 52% at 50% 50%, transparent 0%, rgba(6,6,8,0.75) 100%);
+    z-index: 1;
+    pointer-events: none;
+  }
+
+  .atm-orb::after {
+    content: '';
+    position: absolute;
+    width: 700px;
+    height: 700px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: radial-gradient(circle, rgba(201,182,138,0.05) 0%, transparent 60%);
+    z-index: 1;
+    pointer-events: none;
+    animation: breathe 9s ease-in-out infinite;
+  }
+
+  .atm-shaft::before {
+    content: '';
+    position: absolute;
+    top: -25%;
+    left: 32%;
+    width: 36%;
+    height: 90%;
+    background: radial-gradient(ellipse at 50% 0%, rgba(201,182,138,0.03) 0%, transparent 55%);
+    z-index: 1;
+    pointer-events: none;
+    transform: rotate(-4deg);
+  }
+
+  .atm-predawn::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 70% 60% at 50% 60%, rgba(201,182,138,0.06) 0%, transparent 65%),
+      radial-gradient(ellipse 50% 40% at 50% 30%, rgba(245,241,233,0.03) 0%, transparent 60%);
+    z-index: 1;
+    pointer-events: none;
+  }
+
+  .atm-hz::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(to right, transparent 8%, rgba(201,182,138,0.06) 50%, transparent 92%);
+    z-index: 2;
+    pointer-events: none;
+  }
+
+  /* Side rules */
+  .sr {
+    position: absolute;
+    top: 10%;
+    width: 1px;
+    height: 80%;
+    z-index: 2;
+    pointer-events: none;
+  }
+  .sr.l { left: clamp(1rem, 5vw, 3.5rem); }
+  .sr.r { right: clamp(1rem, 5vw, 3.5rem); }
+  .sr::after {
+    content: '';
+    display: block;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to bottom, transparent, rgba(201,182,138,0.055), transparent);
+  }
+  @media (max-width: 768px) { .sr { display: none; } }
+
+  /* Hero */
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: clamp(4rem, 10vw, 8rem) clamp(1.5rem, 6vw, 5rem);
+  }
+
+  .hero-bg-word {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-family: var(--serif);
+    font-size: clamp(8rem, 22vw, 20rem);
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: transparent;
+    -webkit-text-stroke: 1px rgba(201,182,138,0.04);
+    z-index: 0;
+    pointer-events: none;
+    user-select: none;
+    white-space: nowrap;
+    opacity: 0;
+    animation: ghost-in 2.5s ease 0.3s forwards;
+  }
+
+  .stage-num {
+    font-size: clamp(3rem, 7vw, 5rem);
+    font-weight: 300;
+    font-style: italic;
+    color: var(--warm);
+    opacity: 0.25;
+    display: block;
+    margin-bottom: 1rem;
+  }
+
+  .t-hero {
+    font-size: clamp(2.4rem, 6vw, 4.8rem);
+    font-weight: 300;
+    font-style: italic;
+    line-height: 1.25;
+    letter-spacing: 0.01em;
+  }
+
+  .t-body {
+    font-size: clamp(1.08rem, 2vw, 1.28rem);
+    font-weight: 300;
+    line-height: 2.1;
+    text-align: left;
+  }
+
+  .t-medium {
+    font-size: clamp(1.2rem, 2.5vw, 1.65rem);
+    font-weight: 300;
+    line-height: 1.7;
+  }
+
+  .em { color: var(--warm); font-style: italic; }
+  .dim { color: var(--dim); }
+  .mb { margin-bottom: 1.5em; }
+
+  /* Drop cap */
+  .drop-cap::first-letter {
+    font-size: 3.4em;
+    float: left;
+    line-height: 0.8;
+    margin-right: 0.08em;
+    margin-top: 0.06em;
+    font-weight: 400;
+    color: var(--warm);
+  }
+
+  /* Horizontal rule */
+  .hr {
+    width: 36px;
+    height: 1px;
+    background: linear-gradient(to right, transparent, var(--warm2), transparent);
+    margin: 0 auto;
+    opacity: 0.45;
+  }
+
+  .predawn .hr {
+    background: linear-gradient(to right, transparent, var(--pre-warm), transparent);
+    opacity: 0.3;
+  }
+
+  /* Voice label */
+  .voice-label {
+    font-family: var(--sans);
+    font-weight: 400;
+    font-size: 0.58rem;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: var(--dim);
+  }
+
+  /* Predawn */
+  .predawn {
+    background: var(--pre-bg);
+    color: var(--pre-text);
+  }
+
+  .predawn .voice-label { color: var(--pre-dim); }
+
+  /* Quote */
+  .pullquote {
+    font-weight: 300;
+    font-style: italic;
+    font-size: clamp(1.3rem, 2.8vw, 1.8rem);
+    line-height: 1.65;
+    max-width: 520px;
+    margin: 0 auto;
+    text-align: center;
+  }
+
+  .predawn .pullquote { color: var(--pre-warm); }
+
+  /* CTA link */
+  .way-link {
+    display: inline-block;
+    font-family: var(--sans);
+    font-size: 0.6rem;
+    font-weight: 400;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    text-decoration: none;
+    color: var(--warm);
+    border-bottom: 1px solid rgba(201,182,138,0.2);
+    padding-bottom: 0.3em;
+    transition: border-color 0.3s, color 0.3s;
+  }
+
+  .way-link:hover {
+    border-color: var(--warm);
+    color: var(--warm2);
+  }
+
+  /* Footer */
+  .way-footer {
+    padding: clamp(3rem, 6vw, 4rem) clamp(1.5rem, 6vw, 5rem);
+    text-align: center;
+    background: var(--bg);
+  }
+
+  .ftr-links {
+    display: flex;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .ftr-links a {
+    font-family: var(--sans);
+    font-size: 0.55rem;
+    font-weight: 400;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    text-decoration: none;
+    color: var(--dim);
+    transition: color 0.3s;
+  }
+
+  .ftr-links a:hover { color: var(--text); }
+
+  .ftr-copy {
+    font-family: var(--sans);
+    font-size: 0.5rem;
+    font-weight: 300;
+    color: var(--dim);
+    margin-top: 0.8rem;
+    opacity: 0.35;
+  }
+
+  /* Scroll reveal */
+  .rv {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.9s cubic-bezier(0.16, 1, 0.3, 1),
+                transform 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .rv.vis {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  @keyframes breathe {
+    0%, 100% { opacity: 1; transform: translate(-50%,-50%) scale(1); }
+    50% { opacity: 0.55; transform: translate(-50%,-50%) scale(1.1); }
+  }
+
+  @keyframes ghost-in {
+    to { opacity: 1; }
+  }
+</style>
+</head>
+<body>
+
+<!-- Navigation -->
+<nav class="way-nav">
+  <a href="/">Home</a>
+  <a href="/what-is-the-way/">What Is The Way</a>
+  <a href="/how-it-works/">How It Works</a>
+  <a href="/start-here/">Start Here</a>
+  <a href="/wallace-hamilton/">Wallace Hamilton</a>
+  <a href="/watch/">Watch</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero section atm-v atm-orb" style="background:#060608;">
+  <div class="sr l"></div>
+  <div class="sr r"></div>
+  <div class="hero-bg-word">WAKING</div>
+  <div class="section-inner" style="text-align:center;">
+    <div class="rv stage-num">I</div>
+    <h1 class="rv t-hero">The Waking.</h1>
+    <div style="height:clamp(1.2rem,3vw,2rem);"></div>
+    <p class="rv t-medium" style="max-width:480px;margin:0 auto;color:var(--dim);">The moment you see the lie for the first time. You cannot unsee it. You were never meant to.</p>
+  </div>
+</section>
+
+<!-- WHAT HAPPENS -->
+<section class="section atm-shaft atm-hz" style="background:#09090b;">
+  <div class="sr l"></div>
+  <div class="section-inner">
+    <div class="rv voice-label" style="margin-bottom:1.8rem;">What Happens</div>
+    <p class="rv t-body mb drop-cap">Something breaks through. Not because you went looking for it. Not because you read the right book or met the right person. It breaks through because the covering slipped. For one unguarded moment, you saw what was underneath. And what was underneath was you.</p>
+    <p class="rv t-body mb">The shock is not that you were living a lie. The shock is how total the lie was. Every belief you held. Every identity you wore. Every authority you obeyed. Every fear that kept you in place. None of it was yours. All of it was installed. The covering was so complete that you mistook it for yourself.</p>
+    <p class="rv t-body mb">This is The Founding Wound becoming visible. The original disconnection from The Ground. The moment in your early life when the world inserted itself between you and truth and you forgot there had ever been anything else. You have been searching ever since. Every restlessness, every dissatisfaction, every feeling that something is deeply wrong but you cannot name it. That is the wound speaking.</p>
+    <p class="rv t-body">Now you see it. Now you know its name. The Covering is not a metaphor. It is the structure of every false thing you were taught to accept as real. And seeing it changes the terms of your entire existence.</p>
+  </div>
+</section>
+
+<!-- WHAT IT FEELS LIKE -->
+<section class="section atm-shaft" style="background:#08080a;">
+  <div class="sr l"></div>
+  <div class="sr r"></div>
+  <div class="section-inner">
+    <div class="rv voice-label" style="margin-bottom:1.8rem;">What It Feels Like</div>
+    <p class="rv t-body mb drop-cap">Waking is not comfortable. No one tells you that. They make it sound like a release, an opening, a lightness. It is none of those things. Not at first. At first it is vertigo. You have been standing on a floor that does not exist, and you just realized there is nothing beneath your feet.</p>
+    <p class="rv t-body mb">Everything you built your life on comes into question simultaneously. Your career. Your relationships. Your sense of who you are. The Performing Self, the character you constructed to survive inside The False World, suddenly stands exposed. You can see it. You can feel it operating. And you cannot pretend you do not know.</p>
+    <p class="rv t-body mb">This is why most people retreat. The Caged Mind has a reflex for this. It floods you with noise, with distraction, with the urgent feeling that you should stop looking. That this is dangerous. That you were better off before. The cage is defending itself.</p>
+    <p class="rv t-body">But something else is happening alongside the vertigo. The Gift of Sight is arriving. For the first time, you are seeing through your own eyes. Not through the eyes the world gave you. Yours. The ones that were always there, underneath. This is the first moment of real freedom you have ever had. And once given, The Gift of Sight cannot be taken back.</p>
+  </div>
+</section>
+
+<!-- QUOTE -->
+<section class="section predawn atm-predawn" style="min-height:auto;padding-top:clamp(5rem,10vw,8rem);padding-bottom:clamp(5rem,10vw,8rem);">
+  <div class="section-inner" style="text-align:center;">
+    <div class="rv hr" style="margin-bottom:clamp(2rem,4vw,3rem);"></div>
+    <p class="rv pullquote">"You did not fall asleep on purpose. You were put to sleep. The waking is yours. The sleeping never was."</p>
+    <div class="rv hr" style="margin-top:clamp(2rem,4vw,3rem);"></div>
+  </div>
+</section>
+
+<!-- WHERE THIS LEADS -->
+<section class="section atm-hz" style="background:#0a0a0c;">
+  <div class="sr l"></div>
+  <div class="section-inner" style="text-align:center;">
+    <div class="rv voice-label" style="margin-bottom:1.8rem;">Where This Leads</div>
+    <p class="rv t-medium" style="max-width:500px;margin:0 auto 1.5em;color:var(--dim);">When you see the lie, the next question arrives on its own. It is not theoretical. It is the most urgent question of your life.</p>
+    <p class="rv t-body" style="text-align:center;max-width:480px;margin:0 auto 2.5em;">What do I do about it? How do I remove what was placed over me? How do I get back to what is real? That is the beginning of Clearing. The systematic removal of everything that is not you. Layer by layer. Until only The Ground remains.</p>
+    <div class="rv">
+      <a href="/clearing/" class="way-link">Enter The Clearing</a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="way-footer">
+  <nav class="ftr-links">
+    <a href="/what-is-the-way/">What Is The Way</a>
+    <a href="/start-here/">Start Here</a>
+    <a href="/wallace-hamilton/">Wallace Hamilton</a>
+    <a href="/contact/">Contact</a>
+  </nav>
+  <div class="ftr-copy">&copy; 2026 Wallace Hamilton</div>
+</footer>
+
+<script>
+  const rvs = document.querySelectorAll('.rv');
+  const obs = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('vis');
+      }
+    });
+  }, { threshold: 0.15 });
+  rvs.forEach(el => obs.observe(el));
+</script>
+
+</body>
+</html>

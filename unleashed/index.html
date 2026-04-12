@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unleashed | The Way</title>
+<meta name="description" content="The understanding that freed you individually also explains what happened to civilization as a whole. Discover the complete picture.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #060608;
+    --text: #d6d1c6;
+    --dim: #6e6960;
+    --warm: #c9b68a;
+    --warm2: #b8a070;
+    --warm-faint: rgba(201,182,138,0.04);
+    --light-bg: #f5f1e9;
+    --light-text: #1c1a17;
+    --light-dim: #908a7e;
+    --light-warm: #8e7a50;
+    --pre-bg: #18160f;
+    --pre-text: #d2ccbf;
+    --pre-dim: #7a7468;
+    --pre-warm: #b89e6e;
+    --serif: 'Cormorant Garamond', Georgia, serif;
+    --sans: 'DM Sans', sans-serif;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--serif);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  ::selection { background: var(--warm); color: var(--bg); }
+
+  /* Grain */
+  body::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    z-index: 200;
+    pointer-events: none;
+    opacity: 0.032;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    background-repeat: repeat;
+    background-size: 200px;
+  }
+
+  /* Nav */
+  .nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
+    padding: 1.4rem clamp(1.5rem, 5vw, 3.5rem);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: rgba(6,6,8,0.85);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(201,182,138,0.04);
+  }
+
+  .nav-logo {
+    font-family: var(--serif);
+    font-size: 1.1rem;
+    font-weight: 400;
+    letter-spacing: 0.04em;
+    color: var(--text);
+    text-decoration: none;
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 1.8rem;
+    align-items: center;
+  }
+
+  .nav-links a {
+    font-family: var(--sans);
+    font-size: 0.58rem;
+    font-weight: 400;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    text-decoration: none;
+    color: var(--dim);
+    transition: color 0.3s;
+  }
+
+  .nav-links a:hover { color: var(--text); }
+
+  @media (max-width: 768px) {
+    .nav-links { display: none; }
+  }
+
+  /* Sections */
+  section {
+    padding: clamp(5rem, 10vw, 8rem) clamp(1.5rem, 6vw, 5rem);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .narrow {
+    max-width: 660px;
+    width: 100%;
+    margin: 0 auto;
+  }
+
+  /* Atmospheres */
+  .atm-v::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse 60% 52% at 50% 50%, transparent 0%, rgba(6,6,8,0.75) 100%);
+    z-index: 1;
+    pointer-events: none;
+  }
+
+  .atm-orb::after {
+    content: '';
+    position: absolute;
+    width: 700px;
+    height: 700px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: radial-gradient(circle, rgba(201,182,138,0.05) 0%, transparent 60%);
+    z-index: 1;
+    pointer-events: none;
+    animation: breathe 9s ease-in-out infinite;
+  }
+
+  .atm-shaft::before {
+    content: '';
+    position: absolute;
+    top: -25%;
+    left: 32%;
+    width: 36%;
+    height: 90%;
+    background: radial-gradient(ellipse at 50% 0%, rgba(201,182,138,0.03) 0%, transparent 55%);
+    z-index: 1;
+    pointer-events: none;
+    transform: rotate(-4deg);
+  }
+
+  .atm-predawn::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 70% 60% at 50% 60%, rgba(201,182,138,0.06) 0%, transparent 65%),
+      radial-gradient(ellipse 50% 40% at 50% 30%, rgba(245,241,233,0.03) 0%, transparent 60%);
+    z-index: 1;
+    pointer-events: none;
+  }
+
+  /* Side rules */
+  .sr {
+    position: absolute;
+    top: 10%;
+    width: 1px;
+    height: 80%;
+    z-index: 2;
+    pointer-events: none;
+  }
+  .sr.l { left: clamp(1rem, 5vw, 3.5rem); }
+  .sr.r { right: clamp(1rem, 5vw, 3.5rem); }
+  .sr::after {
+    content: '';
+    display: block;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to bottom, transparent, rgba(201,182,138,0.055), transparent);
+  }
+  @media (max-width: 768px) { .sr { display: none; } }
+
+  /* Typography */
+  .t-hero {
+    font-size: clamp(2.4rem, 6vw, 4.8rem);
+    font-weight: 300;
+    font-style: italic;
+    line-height: 1.25;
+    letter-spacing: 0.01em;
+  }
+
+  .t-body {
+    font-size: clamp(1.08rem, 2vw, 1.28rem);
+    font-weight: 300;
+    line-height: 2.1;
+    text-align: left;
+  }
+
+  .t-medium {
+    font-size: clamp(1.2rem, 2.5vw, 1.65rem);
+    font-weight: 300;
+    line-height: 1.7;
+  }
+
+  .em { color: var(--warm); font-style: italic; }
+  .dim { color: var(--dim); }
+  .mb { margin-bottom: 1.5em; }
+
+  .voice-label {
+    font-family: var(--sans);
+    font-weight: 400;
+    font-size: 0.58rem;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: var(--dim);
+  }
+
+  /* Drop cap */
+  .drop-cap::first-letter {
+    font-size: 3.4em;
+    float: left;
+    line-height: 0.8;
+    margin-right: 0.08em;
+    margin-top: 0.06em;
+    font-weight: 400;
+    color: var(--warm);
+  }
+
+  /* HR */
+  .hr {
+    width: 36px;
+    height: 1px;
+    background: linear-gradient(to right, transparent, var(--warm2), transparent);
+    margin: 0 auto;
+    opacity: 0.45;
+  }
+
+  /* Predawn */
+  .predawn {
+    background: var(--pre-bg);
+    color: var(--pre-text);
+  }
+  .predawn .dim { color: var(--pre-dim); }
+  .predawn .hr {
+    background: linear-gradient(to right, transparent, var(--pre-warm), transparent);
+    opacity: 0.3;
+  }
+
+  /* Light */
+  .bg-light {
+    background: var(--light-bg);
+    color: var(--light-text);
+  }
+  .bg-light .em { color: var(--light-warm); }
+  .bg-light .dim { color: var(--light-dim); }
+
+  /* Scroll reveal */
+  .rv {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1),
+                transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .rv.vis { opacity: 1; transform: translateY(0); }
+  .rv.d1 { transition-delay: 0.08s; }
+  .rv.d2 { transition-delay: 0.16s; }
+  .rv.d3 { transition-delay: 0.24s; }
+
+  /* External links */
+  .ext-links {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    align-items: center;
+    position: relative;
+    z-index: 3;
+  }
+
+  .ext-link {
+    font-family: var(--sans);
+    font-size: 0.62rem;
+    font-weight: 400;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    text-decoration: none;
+    color: var(--dim);
+    transition: color 0.3s;
+    padding: 0.5rem 0;
+    border-bottom: 1px solid rgba(201,182,138,0.06);
+  }
+
+  .ext-link:hover { color: var(--warm); }
+
+  /* Footer */
+  .ftr-links {
+    display: flex;
+    gap: 1.5rem;
+    margin-top: 2.2rem;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  .ftr-links a {
+    font-family: var(--sans);
+    font-size: 0.55rem;
+    font-weight: 400;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    text-decoration: none;
+    color: var(--light-dim);
+    transition: color 0.3s;
+  }
+  .ftr-links a:hover { color: var(--light-text); }
+
+  .ftr-copy {
+    font-family: var(--sans);
+    font-size: 0.5rem;
+    font-weight: 300;
+    color: var(--light-dim);
+    margin-top: 0.8rem;
+    opacity: 0.35;
+  }
+
+  @keyframes breathe {
+    0%, 100% { opacity: 1; transform: translate(-50%,-50%) scale(1); }
+    50% { opacity: 0.55; transform: translate(-50%,-50%) scale(1.1); }
+  }
+</style>
+</head>
+<body>
+
+<!-- Nav (Unleashed page is NOT in nav; standard Way nav without active link) -->
+<nav class="nav">
+  <a href="/" class="nav-logo">The Way</a>
+  <div class="nav-links">
+    <a href="/">Home</a>
+    <a href="/what-is-the-way/">What Is The Way</a>
+    <a href="/how-it-works/">How It Works</a>
+    <a href="/start-here/">Start Here</a>
+    <a href="/wallace-hamilton/">Wallace Hamilton</a>
+    <a href="/watch/">Watch</a>
+  </div>
+</nav>
+
+<!-- Hero -->
+<section class="atm-v atm-orb" style="background:#060608;padding-top:clamp(8rem,14vw,12rem);min-height:55vh;display:flex;align-items:center;">
+  <div class="sr l"></div>
+  <div class="sr r"></div>
+  <div class="narrow" style="text-align:center;position:relative;z-index:3;">
+    <h1 class="rv t-hero" style="max-width:540px;margin:0 auto;">The same truth that freed you explains everything.</h1>
+    <div class="rv d1 hr" style="margin:1.8rem auto;"></div>
+    <p class="rv d2 t-body" style="text-align:center;max-width:460px;margin:0 auto;color:var(--dim);">What happened to you happened to the entire world. When you are ready, there is a body of work that maps the whole picture.</p>
+  </div>
+</section>
+
+<!-- The Bridge -->
+<section style="background:#09090b;">
+  <div class="sr l"></div>
+  <div class="narrow" style="position:relative;z-index:3;">
+    <p class="rv t-body mb drop-cap">When you have walked The Way far enough, a question arises naturally. If the covering was placed over me, was it placed over everyone? If the performing self was installed in me, was it installed across entire civilizations? If the false world is not just my experience but a structural condition, then what happened to me individually must have happened to humanity as a whole.</p>
+    <p class="rv t-body mb">The answer is yes. The same error that caged your mind caged civilization itself. What you experienced as personal suffering is the individual expression of a civilizational condition that has repeated across every major society in recorded history. The covering is not just personal. It is structural.</p>
+    <p class="rv t-body">There is a body of work that maps this. It spans fifty years. It traces the error across every continent and every era. It identifies the exact mechanism by which the covering was installed at the civilizational level, and it shows what happens when that mechanism is finally removed.</p>
+  </div>
+</section>
+
+<!-- Unleashed -->
+<section class="predawn atm-predawn">
+  <div class="sr l"></div>
+  <div class="sr r"></div>
+  <div class="narrow" style="position:relative;z-index:3;text-align:center;">
+    <div class="rv voice-label" style="margin-bottom:0.8rem;">The Complete Picture</div>
+    <h2 class="rv d1" style="font-size:clamp(1.8rem, 4vw, 2.8rem);font-weight:400;letter-spacing:0.02em;">Unleashed</h2>
+    <div class="rv d2 hr" style="margin:1.5rem auto 2rem;"></div>
+    <p class="rv d3 t-body" style="text-align:left;">Mark Hamilton and Wallace Hamilton in conversation. For the first time, the personal path and the civilizational architecture delivered together. Twelve episodes. A book. The complete arc: from the collapse of the ancient mind through the philosophical detour that produced the modern world, to the correction that is now underway.</p>
+    <p class="rv t-body" style="text-align:left;margin-top:1.5em;">This is where The Way meets the larger map. The individual clearing you have been doing is one dimension of a transformation that spans the entire human story. Unleashed is the other dimension: the civilizational one.</p>
+  </div>
+</section>
+
+<!-- The Connection -->
+<section class="atm-shaft" style="background:#060608;">
+  <div class="sr l"></div>
+  <div class="narrow" style="position:relative;z-index:3;">
+    <p class="rv t-body mb drop-cap">The Way addresses the covering as it appears in you: the inherited beliefs, the performing self, the caged mind. Unleashed addresses the covering as it appears in the world: the civilizational structures that installed it in the first place, and the fifty year body of work that makes the entire architecture visible.</p>
+    <p class="rv t-body mb">They are two dimensions of the same understanding. One is intimate. The other is vast. Both describe the same structural error. Both point to the same correction.</p>
+    <p class="rv t-body">You do not need the civilizational picture to walk The Way. The path works on its own. But when you are ready, when the question arises naturally, when you want to understand not just your own condition but the condition of the entire world, it is there.</p>
+  </div>
+</section>
+
+<!-- Link Out -->
+<section style="background:#09090b;text-align:center;">
+  <div class="narrow" style="position:relative;z-index:3;">
+    <div class="rv hr" style="margin-bottom:clamp(2rem,4vw,3rem);"></div>
+    <div class="ext-links rv d1">
+      <a href="https://neothink.com/unleashed" class="ext-link">Read and Listen to Unleashed</a>
+      <a href="https://neothink.com" class="ext-link">The Neothink Institute</a>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<section class="bg-light" style="padding:clamp(3rem,6vw,5rem) clamp(1.5rem,6vw,5rem);text-align:center;">
+  <div class="narrow" style="position:relative;z-index:3;">
+    <nav class="ftr-links" style="margin-top:0;">
+      <a href="/what-is-the-way/">What Is The Way</a>
+      <a href="/start-here/">Start Here</a>
+      <a href="/wallace-hamilton/">Wallace Hamilton</a>
+      <a href="/contact/">Contact</a>
+    </nav>
+    <div class="ftr-copy">&copy; 2026 Wallace Hamilton</div>
+  </div>
+</section>
+
+<script>
+  const obs = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) e.target.classList.add('vis');
+    });
+  }, { threshold: 0.15 });
+  document.querySelectorAll('.rv').forEach(el => obs.observe(el));
+</script>
+
+</body>
+</html>

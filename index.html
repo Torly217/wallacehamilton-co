@@ -1,0 +1,708 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Way</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #060608;
+    --text: #d6d1c6;
+    --dim: #6e6960;
+    --warm: #c9b68a;
+    --warm2: #b8a070;
+    --warm-faint: rgba(201,182,138,0.04);
+    --light-bg: #f5f1e9;
+    --light-text: #1c1a17;
+    --light-dim: #908a7e;
+    --light-warm: #8e7a50;
+    --pre-bg: #18160f;
+    --pre-text: #d2ccbf;
+    --pre-dim: #7a7468;
+    --pre-warm: #b89e6e;
+    --serif: 'Cormorant Garamond', Georgia, serif;
+    --sans: 'DM Sans', sans-serif;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { height: 100%; overflow: hidden; }
+
+  body {
+    height: 100%;
+    overflow: hidden;
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--serif);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  ::selection { background: var(--warm); color: var(--bg); }
+
+  /* Grain */
+  body::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    z-index: 200;
+    pointer-events: none;
+    opacity: 0.032;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    background-repeat: repeat;
+    background-size: 200px;
+  }
+
+  /* Scroll */
+  .sc {
+    height: 100vh;
+    overflow-y: scroll;
+    scroll-snap-type: y mandatory;
+    -webkit-overflow-scrolling: touch;
+    scroll-behavior: smooth;
+  }
+  .sc::-webkit-scrollbar { display: none; }
+  .sc { -ms-overflow-style: none; scrollbar-width: none; }
+
+  /* Panels */
+  .p {
+    min-height: 100vh;
+    scroll-snap-align: start;
+    scroll-snap-stop: always;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: clamp(3rem, 8vw, 6rem) clamp(1.5rem, 6vw, 5rem);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .p-inner {
+    max-width: 660px;
+    width: 100%;
+    position: relative;
+    z-index: 3;
+  }
+
+  /* Animate */
+  .p .a {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 1s cubic-bezier(0.16, 1, 0.3, 1),
+                transform 1s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .p.iv .a { opacity: 1; transform: translateY(0); }
+  .p.iv .a:nth-child(2) { transition-delay: 0.08s; }
+  .p.iv .a:nth-child(3) { transition-delay: 0.16s; }
+  .p.iv .a:nth-child(4) { transition-delay: 0.24s; }
+  .p.iv .a:nth-child(5) { transition-delay: 0.32s; }
+  .p.iv .a:nth-child(6) { transition-delay: 0.4s; }
+  .p.iv .a:nth-child(7) { transition-delay: 0.48s; }
+  .p.iv .a:nth-child(8) { transition-delay: 0.56s; }
+  .p.iv .a:nth-child(9) { transition-delay: 0.64s; }
+  .p.iv .a:nth-child(10) { transition-delay: 0.72s; }
+
+  /* ============================================
+     ATMOSPHERES
+  ============================================ */
+  .atm-v::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse 60% 52% at 50% 50%, transparent 0%, rgba(6,6,8,0.75) 100%);
+    z-index: 1;
+    pointer-events: none;
+  }
+
+  .atm-orb::after {
+    content: '';
+    position: absolute;
+    width: 700px;
+    height: 700px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: radial-gradient(circle, rgba(201,182,138,0.05) 0%, transparent 60%);
+    z-index: 1;
+    pointer-events: none;
+    animation: breathe 9s ease-in-out infinite;
+  }
+
+  .atm-shaft::before {
+    content: '';
+    position: absolute;
+    top: -25%;
+    left: 32%;
+    width: 36%;
+    height: 90%;
+    background: radial-gradient(ellipse at 50% 0%, rgba(201,182,138,0.03) 0%, transparent 55%);
+    z-index: 1;
+    pointer-events: none;
+    transform: rotate(-4deg);
+  }
+
+  .atm-hz::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(to right, transparent 8%, rgba(201,182,138,0.06) 50%, transparent 92%);
+    z-index: 2;
+    pointer-events: none;
+  }
+
+  .atm-lum::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse 55% 45% at 50% 36%, rgba(255,252,245,0.5) 0%, transparent 70%);
+    z-index: 1;
+    pointer-events: none;
+  }
+
+  /* Predawn warm wash */
+  .atm-predawn::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 70% 60% at 50% 60%, rgba(201,182,138,0.06) 0%, transparent 65%),
+      radial-gradient(ellipse 50% 40% at 50% 30%, rgba(245,241,233,0.03) 0%, transparent 60%);
+    z-index: 1;
+    pointer-events: none;
+  }
+
+  /* Side rules */
+  .sr {
+    position: absolute;
+    top: 10%;
+    width: 1px;
+    height: 80%;
+    z-index: 2;
+    pointer-events: none;
+  }
+  .sr.l { left: clamp(1rem, 5vw, 3.5rem); }
+  .sr.r { right: clamp(1rem, 5vw, 3.5rem); }
+  .sr::after {
+    content: '';
+    display: block;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to bottom, transparent, rgba(201,182,138,0.055), transparent);
+  }
+  @media (max-width: 768px) { .sr { display: none; } }
+
+  /* ============================================
+     HERO BACKGROUND WORD
+  ============================================ */
+  .hero-bg-word {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-family: var(--serif);
+    font-size: clamp(8rem, 22vw, 20rem);
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: transparent;
+    -webkit-text-stroke: 1px rgba(201,182,138,0.04);
+    z-index: 0;
+    pointer-events: none;
+    user-select: none;
+    white-space: nowrap;
+    opacity: 0;
+    animation: ghost-in 2.5s ease 0.3s forwards;
+  }
+
+  @keyframes ghost-in {
+    to { opacity: 1; }
+  }
+
+  /* ============================================
+     TYPOGRAPHY
+  ============================================ */
+  .t-hero {
+    font-size: clamp(2.4rem, 6vw, 4.8rem);
+    font-weight: 300;
+    font-style: italic;
+    line-height: 1.25;
+    letter-spacing: 0.01em;
+  }
+
+  .t-body {
+    font-size: clamp(1.08rem, 2vw, 1.28rem);
+    font-weight: 300;
+    line-height: 2.1;
+    text-align: left;
+  }
+
+  .t-medium {
+    font-size: clamp(1.2rem, 2.5vw, 1.65rem);
+    font-weight: 300;
+    line-height: 1.7;
+  }
+
+  .t-lie {
+    font-size: clamp(2.2rem, 5.5vw, 4.2rem);
+    font-weight: 300;
+    font-style: italic;
+    line-height: 1.2;
+    color: var(--warm);
+    letter-spacing: 0.02em;
+  }
+
+  .t-statement {
+    font-size: clamp(1.15rem, 2.4vw, 1.5rem);
+    font-weight: 300;
+    line-height: 1.85;
+  }
+
+  .t-final {
+    font-size: clamp(2.2rem, 5.5vw, 4rem);
+    font-weight: 400;
+    font-style: italic;
+    letter-spacing: 0.02em;
+  }
+
+  .em { color: var(--warm); font-style: italic; }
+  .dim { color: var(--dim); }
+  .mb { margin-bottom: 1.5em; }
+  .mb-sm { margin-bottom: 0.85em; }
+
+  /* Drop cap */
+  .drop-cap::first-letter {
+    font-size: 3.4em;
+    float: left;
+    line-height: 0.8;
+    margin-right: 0.08em;
+    margin-top: 0.06em;
+    font-weight: 400;
+    color: var(--warm);
+  }
+
+  /* Horizontal rule */
+  .hr {
+    width: 36px;
+    height: 1px;
+    background: linear-gradient(to right, transparent, var(--warm2), transparent);
+    margin: 0 auto;
+    opacity: 0.45;
+  }
+  .bg-light .hr {
+    background: linear-gradient(to right, transparent, var(--light-warm), transparent);
+    opacity: 0.25;
+  }
+  .predawn .hr {
+    background: linear-gradient(to right, transparent, var(--pre-warm), transparent);
+    opacity: 0.3;
+  }
+
+  /* ============================================
+     STAGES — 3 COLUMNS ON DESKTOP
+  ============================================ */
+  .stages {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: clamp(2.5rem, 5vw, 3rem);
+    text-align: left;
+  }
+
+  @media (min-width: 800px) {
+    .stages {
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: clamp(2rem, 3vw, 3rem);
+      max-width: 900px;
+    }
+
+    .p-inner.wide { max-width: 920px; }
+  }
+
+  .stage-num {
+    font-size: 0.85rem;
+    font-weight: 300;
+    font-style: italic;
+    color: var(--warm);
+    opacity: 0.5;
+    display: block;
+    margin-bottom: 0.3rem;
+  }
+
+  .stage-name {
+    font-size: clamp(1.3rem, 2.4vw, 1.7rem);
+    font-weight: 400;
+    margin-bottom: 0.7rem;
+    letter-spacing: 0.01em;
+  }
+
+  .stage-desc {
+    font-size: clamp(0.92rem, 1.5vw, 1.02rem);
+    font-weight: 300;
+    line-height: 1.9;
+    color: var(--dim);
+  }
+
+  @media (min-width: 800px) {
+    .stage {
+      padding-top: 1.2rem;
+      border-top: 1px solid rgba(201,182,138,0.06);
+    }
+  }
+
+  @media (max-width: 799px) {
+    .stage {
+      padding-left: 1.6rem;
+      border-left: 1px solid rgba(201,182,138,0.06);
+    }
+  }
+
+  /* ============================================
+     VOICE
+  ============================================ */
+  .voice-label {
+    font-family: var(--sans);
+    font-weight: 400;
+    font-size: 0.58rem;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+  }
+
+  .predawn .voice-label { color: var(--pre-dim); }
+
+  .voice-name {
+    font-size: clamp(2.2rem, 4.5vw, 3.2rem);
+    font-weight: 400;
+    margin-top: 0.6rem;
+    letter-spacing: 0.02em;
+  }
+
+  .voice-desc {
+    font-size: clamp(1rem, 1.8vw, 1.12rem);
+    font-weight: 300;
+    line-height: 2.05;
+    max-width: 440px;
+    margin: 1.3rem auto 1.8rem;
+  }
+
+  .predawn .voice-desc { color: var(--pre-dim); }
+
+  .voice-quote {
+    font-weight: 300;
+    font-style: italic;
+    font-size: clamp(1.1rem, 2.2vw, 1.3rem);
+    line-height: 1.75;
+    max-width: 480px;
+    margin: 0 auto;
+  }
+
+  .predawn .voice-quote { color: var(--pre-warm); }
+
+  /* ============================================
+     PREDAWN PANEL
+  ============================================ */
+  .predawn {
+    background: var(--pre-bg);
+    color: var(--pre-text);
+  }
+
+  /* ============================================
+     LIGHT PANELS
+  ============================================ */
+  .bg-light {
+    background: var(--light-bg);
+    color: var(--light-text);
+  }
+  .bg-light .em { color: var(--light-warm); }
+  .bg-light .dim { color: var(--light-dim); }
+
+  /* ============================================
+     FORM
+  ============================================ */
+  .form-wrap {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+    max-width: 260px;
+    width: 100%;
+    margin: 1.6rem auto 0;
+  }
+
+  .form-input {
+    padding: 0.72rem 0.9rem;
+    background: transparent;
+    border: 1px solid rgba(26,25,22,0.1);
+    color: var(--light-text);
+    font-family: var(--sans);
+    font-size: 0.8rem;
+    font-weight: 300;
+    outline: none;
+    transition: border-color 0.3s;
+  }
+  .form-input::placeholder { color: var(--light-dim); }
+  .form-input:focus { border-color: rgba(26,25,22,0.3); }
+
+  .form-btn {
+    padding: 0.72rem;
+    background: var(--light-text);
+    color: var(--light-bg);
+    border: none;
+    font-family: var(--sans);
+    font-weight: 500;
+    font-size: 0.58rem;
+    letter-spacing: 0.32em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: opacity 0.3s;
+  }
+  .form-btn:hover { opacity: 0.72; }
+
+  .form-note {
+    font-family: var(--sans);
+    font-size: 0.6rem;
+    font-weight: 300;
+    color: var(--light-dim);
+    margin-top: 0.5rem;
+  }
+
+  .ftr-links {
+    display: flex;
+    gap: 1.5rem;
+    margin-top: 2.2rem;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  .ftr-links a {
+    font-family: var(--sans);
+    font-size: 0.55rem;
+    font-weight: 400;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    text-decoration: none;
+    color: var(--light-dim);
+    transition: color 0.3s;
+  }
+  .ftr-links a:hover { color: var(--light-text); }
+
+  .ftr-copy {
+    font-family: var(--sans);
+    font-size: 0.5rem;
+    font-weight: 300;
+    color: var(--light-dim);
+    margin-top: 0.8rem;
+    opacity: 0.35;
+  }
+
+  /* ============================================
+     PROGRESS DOTS
+  ============================================ */
+  .dots {
+    position: fixed;
+    right: clamp(0.7rem, 1.5vw, 1.1rem);
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    z-index: 50;
+  }
+
+  .dot {
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: rgba(107,102,91,0.15);
+    transition: background 0.4s, transform 0.4s;
+    cursor: pointer;
+  }
+  .dot.active {
+    background: var(--warm);
+    transform: scale(1.5);
+  }
+  .dots.on-light .dot { background: rgba(26,25,22,0.08); }
+  .dots.on-light .dot.active { background: var(--light-warm); }
+
+  @media (max-width: 600px) { .dots { display: none; } }
+
+  /* ============================================
+     ANIMATIONS
+  ============================================ */
+  @keyframes breathe {
+    0%, 100% { opacity: 1; transform: translate(-50%,-50%) scale(1); }
+    50% { opacity: 0.55; transform: translate(-50%,-50%) scale(1.1); }
+  }
+</style>
+</head>
+<body>
+
+<div class="sc" id="sc">
+
+  <!-- 1 — HERO -->
+  <section class="p atm-v atm-orb" data-theme="dark" style="background:#060608;">
+    <div class="sr l"></div>
+    <div class="sr r"></div>
+    <div class="hero-bg-word">COVERED</div>
+    <div class="p-inner" style="text-align:center;">
+      <div class="a t-hero">You are not broken.</div>
+      <div style="height:clamp(1.2rem,3vw,2rem);"></div>
+      <div class="a t-hero">You were <span class="em">covered.</span></div>
+    </div>
+  </section>
+
+  <!-- 2 — THE COVERING -->
+  <section class="p atm-shaft atm-hz" data-theme="dark" style="background:#09090b;">
+    <div class="sr l"></div>
+    <div class="p-inner">
+      <p class="a t-body mb drop-cap">Everything you are seeking outside yourself has always been inside you the entire time. Your mind was built to see truth directly. But something was placed over it.</p>
+      <p class="a t-body mb">A lifetime of inherited beliefs, conditioning, and influences absorbed from outside yourself. From your parents. Your teachers. Your culture. Your religion. Your government. Every institution that touched your life added another layer.</p>
+      <p class="a t-body mb">None of it was chosen. All of it was absorbed. <span class="em">That is not you.</span></p>
+      <p class="a t-body">The covering is not who you are. It is what was placed over who you are. And there is a difference between the two that changes everything.</p>
+    </div>
+  </section>
+
+  <!-- 3 — THE LIE -->
+  <section class="p atm-v" data-theme="dark" style="background:#050507;">
+    <div class="sr l"></div>
+    <div class="sr r"></div>
+    <div class="p-inner" style="text-align:center;display:flex;flex-direction:column;min-height:60vh;justify-content:space-between;padding:2rem 0;">
+      <div></div>
+      <div>
+        <p class="a t-medium" style="max-width:480px;margin:0 auto;color:var(--dim);line-height:1.75;">Intermediaries, external authorities, leaders, and institutions placed themselves between you and truth and taught you that you needed them instead of seeing for yourself.</p>
+      </div>
+      <div style="padding-bottom:2rem;">
+        <div class="a hr" style="margin-bottom:clamp(1.5rem,4vw,2.5rem);"></div>
+        <div class="a t-lie">That is the lie.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 4 — SUFFERING / TRUTH / WHAT THE WAY DOES -->
+  <section class="p atm-hz" data-theme="dark" style="background:#0a0a0c;">
+    <div class="sr l"></div>
+    <div class="p-inner">
+      <p class="a t-medium" style="text-align:center;max-width:460px;margin:0 auto 0.6em;font-style:italic;">Suffering is the distance between you and truth.</p>
+      <p class="a t-medium" style="text-align:center;max-width:460px;margin:0 auto;">When nothing stands between you and truth, life works naturally.</p>
+      <div class="a hr" style="margin:clamp(1.8rem,4vw,2.8rem) auto;"></div>
+      <p class="a t-body mb drop-cap">The Way removes the covering and restores sight: the ability to see truth directly, for yourself, permanently.</p>
+      <p class="a t-body mb">The Way does not tell you what to think, what to believe, or how to live. It does the opposite. The Way gives you the ability to see truth and clear all that is false so what remains is <span class="em">you.</span></p>
+      <p class="a t-body">This is not self-help. Self-help assumes you are deficient and need to be improved. The Way assumes you are complete and need to be <span class="em">uncovered.</span></p>
+    </div>
+  </section>
+
+  <!-- 5 — THE PATH -->
+  <section class="p atm-shaft" data-theme="dark" style="background:#08080a;">
+    <div class="p-inner wide" style="text-align:center;">
+      <p class="a t-medium" style="max-width:460px;margin:0 auto clamp(2.5rem,5vw,3.5rem);color:var(--dim);font-style:italic;">Three stages. Not steps to complete.<br>Dimensions of a single process.</p>
+      <div class="a stages">
+        <div class="stage">
+          <span class="stage-num">I</span>
+          <div class="stage-name">The Waking</div>
+          <div class="stage-desc">The recognition that you have been asleep. That the life you are living is built on a foundation you did not choose. That the voice in your head is not your voice.</div>
+        </div>
+        <div class="stage">
+          <span class="stage-num">II</span>
+          <div class="stage-name">The Clearing</div>
+          <div class="stage-desc">The systematic removal of everything that is not you. The beliefs that were installed. The identities that were assigned. The fears that were inherited. Layer by layer, the covering comes off.</div>
+        </div>
+        <div class="stage">
+          <span class="stage-num">III</span>
+          <div class="stage-name">The Living</div>
+          <div class="stage-desc">Operating fully from the uncovered self. Seeing truth directly. Creating from what is real rather than performing from what is false. This is the way you move through the rest of your life.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 6 — THE VOICE (PREDAWN) -->
+  <section class="p predawn atm-predawn" data-theme="dark">
+    <div class="sr l"></div>
+    <div class="sr r"></div>
+    <div class="p-inner" style="text-align:center;">
+      <div class="a voice-label">The Voice</div>
+      <div class="a voice-name">Wallace Hamilton</div>
+      <div class="a voice-desc">He names the wound. He points to the path. He speaks directly to the condition that most people spend their lives trying to fix without understanding what caused it.</div>
+      <div class="a hr" style="margin-bottom:1.8rem;"></div>
+      <div class="a voice-quote">"I am not here to give you answers. I am here to remove the thing that is standing between you and the answers you already have."</div>
+    </div>
+  </section>
+
+  <!-- 7 — DECLARATION (LIGHT) -->
+  <section class="p bg-light atm-lum" data-theme="light">
+    <div class="p-inner" style="text-align:center;">
+      <p class="a t-statement mb-sm">You are not broken and never were.</p>
+      <p class="a t-statement mb-sm">Your mind was built to see truth directly.</p>
+      <p class="a t-statement mb-sm">The covering can be removed. <span class="em">Permanently.</span></p>
+      <p class="a t-statement mb-sm">What remains is not a new version of you.</p>
+      <p class="a t-statement mb-sm">It is the original.</p>
+      <p class="a t-statement">And for the first time, <span class="em">you live.</span></p>
+      <div class="a hr" style="margin:clamp(1.5rem,3vw,2.2rem) auto;"></div>
+      <div class="a t-final">This is The Way.</div>
+    </div>
+  </section>
+
+  <!-- 8 — BEGIN (LIGHT) -->
+  <section class="p bg-light" data-theme="light">
+    <div class="p-inner" style="text-align:center;">
+      <div class="a" style="font-size:clamp(1.6rem,3.5vw,2.4rem);font-weight:400;letter-spacing:0.02em;">Begin</div>
+      <div class="a" style="font-style:italic;font-weight:300;font-size:clamp(0.95rem,1.8vw,1.08rem);color:var(--light-dim);margin-top:0.4rem;">Not a course. Not a program. A direct encounter with truth.</div>
+      <div class="a form-wrap">
+        <input type="email" class="form-input" placeholder="Your email" aria-label="Email address">
+        <button class="form-btn">Join</button>
+      </div>
+      <div class="a form-note">No spam. No sales. Just truth, when it is ready.</div>
+      <nav class="a ftr-links">
+        <a href="#">What Is The Way</a>
+        <a href="#">Start Here</a>
+        <a href="#">Wallace Hamilton</a>
+        <a href="#">Contact</a>
+      </nav>
+      <div class="a ftr-copy">&copy; 2026 Wallace Hamilton</div>
+    </div>
+  </section>
+
+</div>
+
+<!-- Dots -->
+<div class="dots" id="dots"></div>
+
+<script>
+  const sc = document.getElementById('sc');
+  const panels = document.querySelectorAll('.p');
+  const dotsC = document.getElementById('dots');
+
+  panels.forEach((_, i) => {
+    const d = document.createElement('div');
+    d.className = 'dot';
+    d.addEventListener('click', () => panels[i].scrollIntoView({ behavior: 'smooth' }));
+    dotsC.appendChild(d);
+  });
+
+  const dots = document.querySelectorAll('.dot');
+
+  const obs = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) e.target.classList.add('iv');
+      else e.target.classList.remove('iv');
+    });
+  }, { root: sc, threshold: 0.25 });
+
+  panels.forEach(p => obs.observe(p));
+
+  sc.addEventListener('scroll', () => {
+    let ai = 0, md = Infinity;
+    panels.forEach((p, i) => {
+      const d = Math.abs(p.getBoundingClientRect().top);
+      if (d < md) { md = d; ai = i; }
+    });
+    dots.forEach((d, i) => d.classList.toggle('active', i === ai));
+    const t = panels[ai].dataset.theme;
+    dotsC.classList.toggle('on-light', t === 'light');
+  });
+
+  dots[0]?.classList.add('active');
+</script>
+
+</body>
+</html>

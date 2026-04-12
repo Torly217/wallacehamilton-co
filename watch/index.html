@@ -1,0 +1,558 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Watch | The Way</title>
+<meta name="description" content="Wallace Hamilton speaking directly about the condition, the covering, and the path. Video content from The Way.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #060608;
+    --text: #d6d1c6;
+    --dim: #6e6960;
+    --warm: #c9b68a;
+    --warm2: #b8a070;
+    --warm-faint: rgba(201,182,138,0.04);
+    --light-bg: #f5f1e9;
+    --light-text: #1c1a17;
+    --light-dim: #908a7e;
+    --light-warm: #8e7a50;
+    --pre-bg: #18160f;
+    --pre-text: #d2ccbf;
+    --pre-dim: #7a7468;
+    --pre-warm: #b89e6e;
+    --serif: 'Cormorant Garamond', Georgia, serif;
+    --sans: 'DM Sans', sans-serif;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--serif);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  ::selection { background: var(--warm); color: var(--bg); }
+
+  /* Grain */
+  body::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    z-index: 200;
+    pointer-events: none;
+    opacity: 0.032;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    background-repeat: repeat;
+    background-size: 200px;
+  }
+
+  /* Nav */
+  .nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
+    padding: 1.4rem clamp(1.5rem, 5vw, 3.5rem);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: rgba(6,6,8,0.85);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(201,182,138,0.04);
+  }
+
+  .nav-logo {
+    font-family: var(--serif);
+    font-size: 1.1rem;
+    font-weight: 400;
+    letter-spacing: 0.04em;
+    color: var(--text);
+    text-decoration: none;
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 1.8rem;
+    align-items: center;
+  }
+
+  .nav-links a {
+    font-family: var(--sans);
+    font-size: 0.58rem;
+    font-weight: 400;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    text-decoration: none;
+    color: var(--dim);
+    transition: color 0.3s;
+  }
+
+  .nav-links a:hover { color: var(--text); }
+  .nav-links a.active { color: var(--warm); }
+
+  @media (max-width: 768px) {
+    .nav-links { display: none; }
+  }
+
+  /* Sections */
+  section {
+    padding: clamp(5rem, 10vw, 8rem) clamp(1.5rem, 6vw, 5rem);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .narrow {
+    max-width: 660px;
+    width: 100%;
+    margin: 0 auto;
+  }
+
+  .wide {
+    max-width: 960px;
+    width: 100%;
+    margin: 0 auto;
+  }
+
+  /* Atmospheres */
+  .atm-v::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse 60% 52% at 50% 50%, transparent 0%, rgba(6,6,8,0.75) 100%);
+    z-index: 1;
+    pointer-events: none;
+  }
+
+  .atm-orb::after {
+    content: '';
+    position: absolute;
+    width: 700px;
+    height: 700px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: radial-gradient(circle, rgba(201,182,138,0.05) 0%, transparent 60%);
+    z-index: 1;
+    pointer-events: none;
+    animation: breathe 9s ease-in-out infinite;
+  }
+
+  .atm-predawn::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 70% 60% at 50% 60%, rgba(201,182,138,0.06) 0%, transparent 65%),
+      radial-gradient(ellipse 50% 40% at 50% 30%, rgba(245,241,233,0.03) 0%, transparent 60%);
+    z-index: 1;
+    pointer-events: none;
+  }
+
+  /* Side rules */
+  .sr {
+    position: absolute;
+    top: 10%;
+    width: 1px;
+    height: 80%;
+    z-index: 2;
+    pointer-events: none;
+  }
+  .sr.l { left: clamp(1rem, 5vw, 3.5rem); }
+  .sr.r { right: clamp(1rem, 5vw, 3.5rem); }
+  .sr::after {
+    content: '';
+    display: block;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to bottom, transparent, rgba(201,182,138,0.055), transparent);
+  }
+  @media (max-width: 768px) { .sr { display: none; } }
+
+  /* Typography */
+  .t-hero {
+    font-size: clamp(2.4rem, 6vw, 4.8rem);
+    font-weight: 300;
+    font-style: italic;
+    line-height: 1.25;
+    letter-spacing: 0.01em;
+  }
+
+  .t-body {
+    font-size: clamp(1.08rem, 2vw, 1.28rem);
+    font-weight: 300;
+    line-height: 2.1;
+    text-align: left;
+  }
+
+  .t-medium {
+    font-size: clamp(1.2rem, 2.5vw, 1.65rem);
+    font-weight: 300;
+    line-height: 1.7;
+  }
+
+  .em { color: var(--warm); font-style: italic; }
+  .dim { color: var(--dim); }
+  .mb { margin-bottom: 1.5em; }
+
+  .voice-label {
+    font-family: var(--sans);
+    font-weight: 400;
+    font-size: 0.58rem;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: var(--dim);
+  }
+
+  /* HR */
+  .hr {
+    width: 36px;
+    height: 1px;
+    background: linear-gradient(to right, transparent, var(--warm2), transparent);
+    margin: 0 auto;
+    opacity: 0.45;
+  }
+
+  /* Predawn */
+  .predawn {
+    background: var(--pre-bg);
+    color: var(--pre-text);
+  }
+  .predawn .dim { color: var(--pre-dim); }
+
+  /* Light */
+  .bg-light {
+    background: var(--light-bg);
+    color: var(--light-text);
+  }
+  .bg-light .em { color: var(--light-warm); }
+  .bg-light .dim { color: var(--light-dim); }
+  .bg-light .hr {
+    background: linear-gradient(to right, transparent, var(--light-warm), transparent);
+    opacity: 0.25;
+  }
+
+  /* Scroll reveal */
+  .rv {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1),
+                transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .rv.vis { opacity: 1; transform: translateY(0); }
+  .rv.d1 { transition-delay: 0.08s; }
+  .rv.d2 { transition-delay: 0.16s; }
+  .rv.d3 { transition-delay: 0.24s; }
+  .rv.d4 { transition-delay: 0.32s; }
+  .rv.d5 { transition-delay: 0.4s; }
+
+  /* Featured video */
+  .featured-video {
+    max-width: 800px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 3;
+  }
+
+  .video-placeholder {
+    width: 100%;
+    aspect-ratio: 16/9;
+    background: rgba(201,182,138,0.04);
+    border: 1px solid rgba(201,182,138,0.08);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .video-placeholder::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at 50% 50%, rgba(201,182,138,0.03) 0%, transparent 60%);
+  }
+
+  .play-icon {
+    width: 64px;
+    height: 64px;
+    border: 1px solid rgba(201,182,138,0.2);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    z-index: 1;
+  }
+
+  .play-icon::after {
+    content: '';
+    width: 0;
+    height: 0;
+    border-top: 10px solid transparent;
+    border-bottom: 10px solid transparent;
+    border-left: 16px solid rgba(201,182,138,0.4);
+    margin-left: 3px;
+  }
+
+  .featured-title {
+    font-size: clamp(1.3rem, 2.5vw, 1.8rem);
+    font-weight: 400;
+    margin-top: 1.5rem;
+    letter-spacing: 0.01em;
+  }
+
+  .featured-desc {
+    font-size: clamp(1rem, 1.6vw, 1.12rem);
+    font-weight: 300;
+    line-height: 1.9;
+    color: var(--dim);
+    margin-top: 0.6rem;
+    max-width: 560px;
+  }
+
+  /* Video grid */
+  .video-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: clamp(1.5rem, 3vw, 2.5rem);
+    position: relative;
+    z-index: 3;
+  }
+
+  .video-card {
+    position: relative;
+  }
+
+  .video-thumb {
+    width: 100%;
+    aspect-ratio: 16/9;
+    background: rgba(201,182,138,0.03);
+    border: 1px solid rgba(201,182,138,0.06);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: border-color 0.3s;
+  }
+
+  .video-card:hover .video-thumb {
+    border-color: rgba(201,182,138,0.12);
+  }
+
+  .play-sm {
+    width: 40px;
+    height: 40px;
+    border: 1px solid rgba(201,182,138,0.15);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .play-sm::after {
+    content: '';
+    width: 0;
+    height: 0;
+    border-top: 6px solid transparent;
+    border-bottom: 6px solid transparent;
+    border-left: 10px solid rgba(201,182,138,0.3);
+    margin-left: 2px;
+  }
+
+  .video-card-title {
+    font-size: clamp(1.05rem, 1.8vw, 1.2rem);
+    font-weight: 400;
+    margin-top: 0.9rem;
+    letter-spacing: 0.01em;
+  }
+
+  .video-card-desc {
+    font-size: clamp(0.88rem, 1.3vw, 0.95rem);
+    font-weight: 300;
+    line-height: 1.8;
+    color: var(--dim);
+    margin-top: 0.3rem;
+  }
+
+  .predawn .video-card-desc { color: var(--pre-dim); }
+
+  /* Subscribe */
+  .subscribe-btn {
+    display: inline-block;
+    padding: 0.85rem 2.2rem;
+    font-family: var(--sans);
+    font-weight: 500;
+    font-size: 0.58rem;
+    letter-spacing: 0.32em;
+    text-transform: uppercase;
+    text-decoration: none;
+    color: var(--bg);
+    background: var(--warm);
+    transition: opacity 0.3s;
+  }
+
+  .subscribe-btn:hover { opacity: 0.8; }
+
+  /* Footer */
+  .ftr-links {
+    display: flex;
+    gap: 1.5rem;
+    margin-top: 2.2rem;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  .ftr-links a {
+    font-family: var(--sans);
+    font-size: 0.55rem;
+    font-weight: 400;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    text-decoration: none;
+    color: var(--light-dim);
+    transition: color 0.3s;
+  }
+  .ftr-links a:hover { color: var(--light-text); }
+
+  .ftr-copy {
+    font-family: var(--sans);
+    font-size: 0.5rem;
+    font-weight: 300;
+    color: var(--light-dim);
+    margin-top: 0.8rem;
+    opacity: 0.35;
+  }
+
+  @keyframes breathe {
+    0%, 100% { opacity: 1; transform: translate(-50%,-50%) scale(1); }
+    50% { opacity: 0.55; transform: translate(-50%,-50%) scale(1.1); }
+  }
+</style>
+</head>
+<body>
+
+<!-- Nav -->
+<nav class="nav">
+  <a href="/" class="nav-logo">The Way</a>
+  <div class="nav-links">
+    <a href="/">Home</a>
+    <a href="/what-is-the-way/">What Is The Way</a>
+    <a href="/how-it-works/">How It Works</a>
+    <a href="/start-here/">Start Here</a>
+    <a href="/wallace-hamilton/">Wallace Hamilton</a>
+    <a href="/watch/" class="active">Watch</a>
+  </div>
+</nav>
+
+<!-- Hero -->
+<section class="atm-v atm-orb" style="background:#060608;padding-top:clamp(8rem,14vw,12rem);min-height:50vh;display:flex;align-items:center;">
+  <div class="sr l"></div>
+  <div class="sr r"></div>
+  <div class="narrow" style="text-align:center;position:relative;z-index:3;">
+    <div class="rv voice-label" style="margin-bottom:1rem;">Video</div>
+    <h1 class="rv d1 t-hero">Watch</h1>
+    <div class="rv d2 hr" style="margin:1.8rem auto;"></div>
+    <p class="rv d3 t-body" style="text-align:center;max-width:480px;margin:0 auto;color:var(--dim);">Wallace Hamilton speaking directly about the condition, the covering, and the path.</p>
+  </div>
+</section>
+
+<!-- Featured -->
+<section style="background:#08080a;padding-top:clamp(3rem,6vw,5rem);">
+  <div class="featured-video">
+    <div class="rv voice-label" style="margin-bottom:1rem;">Featured</div>
+    <div class="rv d1 video-placeholder">
+      <div class="play-icon"></div>
+    </div>
+    <h2 class="rv d2 featured-title">You Were Never Broken</h2>
+    <p class="rv d3 featured-desc">The opening statement. What the covering is. Why you feel the way you do. And what becomes possible once you see it.</p>
+  </div>
+</section>
+
+<!-- More Videos -->
+<section class="predawn atm-predawn" style="padding-top:clamp(4rem,8vw,7rem);">
+  <div class="wide" style="position:relative;z-index:3;">
+    <div class="rv voice-label" style="margin-bottom:clamp(2rem,4vw,3rem);">More from Wallace Hamilton</div>
+    <div class="video-grid">
+
+      <div class="video-card rv d1">
+        <div class="video-thumb"><div class="play-sm"></div></div>
+        <h3 class="video-card-title">The Covering</h3>
+        <p class="video-card-desc">What was placed over your mind. Where it came from. How it operates without your awareness.</p>
+      </div>
+
+      <div class="video-card rv d2">
+        <div class="video-thumb"><div class="play-sm"></div></div>
+        <h3 class="video-card-title">The Founding Wound</h3>
+        <p class="video-card-desc">The original moment when the covering took hold. The first time you learned to perform instead of live.</p>
+      </div>
+
+      <div class="video-card rv d3">
+        <div class="video-thumb"><div class="play-sm"></div></div>
+        <h3 class="video-card-title">The Performing Self</h3>
+        <p class="video-card-desc">The identity you built to survive. Why it feels like you. Why it is not you.</p>
+      </div>
+
+      <div class="video-card rv d4">
+        <div class="video-thumb"><div class="play-sm"></div></div>
+        <h3 class="video-card-title">The Gift of Sight</h3>
+        <p class="video-card-desc">What it means to see truth directly. Not to believe it. Not to agree with it. To see it for yourself.</p>
+      </div>
+
+      <div class="video-card rv d5">
+        <div class="video-thumb"><div class="play-sm"></div></div>
+        <h3 class="video-card-title">What Is Real</h3>
+        <p class="video-card-desc">The difference between the false world and the ground beneath it. How to tell which one you are living in.</p>
+      </div>
+
+      <div class="video-card rv">
+        <div class="video-thumb"><div class="play-sm"></div></div>
+        <h3 class="video-card-title">Internal Authority</h3>
+        <p class="video-card-desc">The shift from looking outward for permission to standing on what you know. The end of borrowed truth.</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- Subscribe -->
+<section style="background:#060608;text-align:center;">
+  <div class="sr l"></div>
+  <div class="sr r"></div>
+  <div class="narrow" style="position:relative;z-index:3;">
+    <div class="rv hr" style="margin-bottom:clamp(1.5rem,3vw,2.5rem);"></div>
+    <p class="rv t-medium" style="font-style:italic;color:var(--dim);margin-bottom:1.5rem;">New videos as they arrive.</p>
+    <a href="#" class="rv d1 subscribe-btn">Subscribe on YouTube</a>
+    <p class="rv d2" style="font-family:var(--sans);font-size:0.6rem;font-weight:300;color:var(--dim);margin-top:1.2rem;opacity:0.6;">Free. No algorithm. Just the voice.</p>
+  </div>
+</section>
+
+<!-- Footer -->
+<section class="bg-light" style="padding:clamp(3rem,6vw,5rem) clamp(1.5rem,6vw,5rem);text-align:center;">
+  <div class="narrow" style="position:relative;z-index:3;">
+    <nav class="ftr-links" style="margin-top:0;">
+      <a href="/what-is-the-way/">What Is The Way</a>
+      <a href="/start-here/">Start Here</a>
+      <a href="/wallace-hamilton/">Wallace Hamilton</a>
+      <a href="/contact/">Contact</a>
+    </nav>
+    <div class="ftr-copy">&copy; 2026 Wallace Hamilton</div>
+  </div>
+</section>
+
+<script>
+  const obs = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) e.target.classList.add('vis');
+    });
+  }, { threshold: 0.15 });
+  document.querySelectorAll('.rv').forEach(el => obs.observe(el));
+</script>
+
+</body>
+</html>

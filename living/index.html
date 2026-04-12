@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Living | The Way</title>
+<meta name="description" content="Stage III. Operating fully from the uncovered self. Seeing truth directly. Creating from what is real rather than performing from what is false. This is the way you move through the rest of your life.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #060608;
+    --text: #d6d1c6;
+    --dim: #6e6960;
+    --warm: #c9b68a;
+    --warm2: #b8a070;
+    --warm-faint: rgba(201,182,138,0.04);
+    --light-bg: #f5f1e9;
+    --light-text: #1c1a17;
+    --light-dim: #908a7e;
+    --light-warm: #8e7a50;
+    --pre-bg: #18160f;
+    --pre-text: #d2ccbf;
+    --pre-dim: #7a7468;
+    --pre-warm: #b89e6e;
+    --serif: 'Cormorant Garamond', Georgia, serif;
+    --sans: 'DM Sans', sans-serif;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--serif);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  ::selection { background: var(--warm); color: var(--bg); }
+
+  /* Grain */
+  body::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    z-index: 200;
+    pointer-events: none;
+    opacity: 0.032;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    background-repeat: repeat;
+    background-size: 200px;
+  }
+
+  /* Navigation */
+  .way-nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
+    padding: 1.4rem clamp(1.5rem, 4vw, 3rem);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: clamp(1.2rem, 3vw, 2.2rem);
+    background: linear-gradient(to bottom, rgba(6,6,8,0.92) 0%, rgba(6,6,8,0.6) 70%, transparent 100%);
+  }
+
+  .way-nav a {
+    font-family: var(--sans);
+    font-size: 0.55rem;
+    font-weight: 400;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    text-decoration: none;
+    color: var(--dim);
+    transition: color 0.3s;
+  }
+
+  .way-nav a:hover { color: var(--text); }
+
+  /* Sections */
+  .section {
+    padding: clamp(4rem, 10vw, 8rem) clamp(1.5rem, 6vw, 5rem);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .section-inner {
+    max-width: 660px;
+    width: 100%;
+    margin: 0 auto;
+    position: relative;
+    z-index: 3;
+  }
+
+  /* Atmospheres */
+  .atm-v::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse 60% 52% at 50% 50%, transparent 0%, rgba(6,6,8,0.75) 100%);
+    z-index: 1;
+    pointer-events: none;
+  }
+
+  .atm-orb::after {
+    content: '';
+    position: absolute;
+    width: 700px;
+    height: 700px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: radial-gradient(circle, rgba(201,182,138,0.05) 0%, transparent 60%);
+    z-index: 1;
+    pointer-events: none;
+    animation: breathe 9s ease-in-out infinite;
+  }
+
+  .atm-shaft::before {
+    content: '';
+    position: absolute;
+    top: -25%;
+    left: 32%;
+    width: 36%;
+    height: 90%;
+    background: radial-gradient(ellipse at 50% 0%, rgba(201,182,138,0.03) 0%, transparent 55%);
+    z-index: 1;
+    pointer-events: none;
+    transform: rotate(-4deg);
+  }
+
+  .atm-predawn::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 70% 60% at 50% 60%, rgba(201,182,138,0.06) 0%, transparent 65%),
+      radial-gradient(ellipse 50% 40% at 50% 30%, rgba(245,241,233,0.03) 0%, transparent 60%);
+    z-index: 1;
+    pointer-events: none;
+  }
+
+  .atm-hz::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(to right, transparent 8%, rgba(201,182,138,0.06) 50%, transparent 92%);
+    z-index: 2;
+    pointer-events: none;
+  }
+
+  /* Side rules */
+  .sr {
+    position: absolute;
+    top: 10%;
+    width: 1px;
+    height: 80%;
+    z-index: 2;
+    pointer-events: none;
+  }
+  .sr.l { left: clamp(1rem, 5vw, 3.5rem); }
+  .sr.r { right: clamp(1rem, 5vw, 3.5rem); }
+  .sr::after {
+    content: '';
+    display: block;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to bottom, transparent, rgba(201,182,138,0.055), transparent);
+  }
+  @media (max-width: 768px) { .sr { display: none; } }
+
+  /* Hero */
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: clamp(4rem, 10vw, 8rem) clamp(1.5rem, 6vw, 5rem);
+  }
+
+  .hero-bg-word {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-family: var(--serif);
+    font-size: clamp(8rem, 22vw, 20rem);
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: transparent;
+    -webkit-text-stroke: 1px rgba(201,182,138,0.04);
+    z-index: 0;
+    pointer-events: none;
+    user-select: none;
+    white-space: nowrap;
+    opacity: 0;
+    animation: ghost-in 2.5s ease 0.3s forwards;
+  }
+
+  .stage-num {
+    font-size: clamp(3rem, 7vw, 5rem);
+    font-weight: 300;
+    font-style: italic;
+    color: var(--warm);
+    opacity: 0.25;
+    display: block;
+    margin-bottom: 1rem;
+  }
+
+  .t-hero {
+    font-size: clamp(2.4rem, 6vw, 4.8rem);
+    font-weight: 300;
+    font-style: italic;
+    line-height: 1.25;
+    letter-spacing: 0.01em;
+  }
+
+  .t-body {
+    font-size: clamp(1.08rem, 2vw, 1.28rem);
+    font-weight: 300;
+    line-height: 2.1;
+    text-align: left;
+  }
+
+  .t-medium {
+    font-size: clamp(1.2rem, 2.5vw, 1.65rem);
+    font-weight: 300;
+    line-height: 1.7;
+  }
+
+  .em { color: var(--warm); font-style: italic; }
+  .dim { color: var(--dim); }
+  .mb { margin-bottom: 1.5em; }
+
+  /* Drop cap */
+  .drop-cap::first-letter {
+    font-size: 3.4em;
+    float: left;
+    line-height: 0.8;
+    margin-right: 0.08em;
+    margin-top: 0.06em;
+    font-weight: 400;
+    color: var(--warm);
+  }
+
+  /* Horizontal rule */
+  .hr {
+    width: 36px;
+    height: 1px;
+    background: linear-gradient(to right, transparent, var(--warm2), transparent);
+    margin: 0 auto;
+    opacity: 0.45;
+  }
+
+  .predawn .hr {
+    background: linear-gradient(to right, transparent, var(--pre-warm), transparent);
+    opacity: 0.3;
+  }
+
+  /* Voice label */
+  .voice-label {
+    font-family: var(--sans);
+    font-weight: 400;
+    font-size: 0.58rem;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: var(--dim);
+  }
+
+  /* Predawn */
+  .predawn {
+    background: var(--pre-bg);
+    color: var(--pre-text);
+  }
+
+  .predawn .voice-label { color: var(--pre-dim); }
+
+  /* Quote */
+  .pullquote {
+    font-weight: 300;
+    font-style: italic;
+    font-size: clamp(1.3rem, 2.8vw, 1.8rem);
+    line-height: 1.65;
+    max-width: 520px;
+    margin: 0 auto;
+    text-align: center;
+  }
+
+  .predawn .pullquote { color: var(--pre-warm); }
+
+  /* CTA link */
+  .way-link {
+    display: inline-block;
+    font-family: var(--sans);
+    font-size: 0.6rem;
+    font-weight: 400;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    text-decoration: none;
+    color: var(--warm);
+    border-bottom: 1px solid rgba(201,182,138,0.2);
+    padding-bottom: 0.3em;
+    transition: border-color 0.3s, color 0.3s;
+  }
+
+  .way-link:hover {
+    border-color: var(--warm);
+    color: var(--warm2);
+  }
+
+  /* Footer */
+  .way-footer {
+    padding: clamp(3rem, 6vw, 4rem) clamp(1.5rem, 6vw, 5rem);
+    text-align: center;
+    background: var(--bg);
+  }
+
+  .ftr-links {
+    display: flex;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .ftr-links a {
+    font-family: var(--sans);
+    font-size: 0.55rem;
+    font-weight: 400;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    text-decoration: none;
+    color: var(--dim);
+    transition: color 0.3s;
+  }
+
+  .ftr-links a:hover { color: var(--text); }
+
+  .ftr-copy {
+    font-family: var(--sans);
+    font-size: 0.5rem;
+    font-weight: 300;
+    color: var(--dim);
+    margin-top: 0.8rem;
+    opacity: 0.35;
+  }
+
+  /* Scroll reveal */
+  .rv {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.9s cubic-bezier(0.16, 1, 0.3, 1),
+                transform 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .rv.vis {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  @keyframes breathe {
+    0%, 100% { opacity: 1; transform: translate(-50%,-50%) scale(1); }
+    50% { opacity: 0.55; transform: translate(-50%,-50%) scale(1.1); }
+  }
+
+  @keyframes ghost-in {
+    to { opacity: 1; }
+  }
+</style>
+</head>
+<body>
+
+<!-- Navigation -->
+<nav class="way-nav">
+  <a href="/">Home</a>
+  <a href="/what-is-the-way/">What Is The Way</a>
+  <a href="/how-it-works/">How It Works</a>
+  <a href="/start-here/">Start Here</a>
+  <a href="/wallace-hamilton/">Wallace Hamilton</a>
+  <a href="/watch/">Watch</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero section atm-v atm-orb" style="background:#060608;">
+  <div class="sr l"></div>
+  <div class="sr r"></div>
+  <div class="hero-bg-word">LIVING</div>
+  <div class="section-inner" style="text-align:center;">
+    <div class="rv stage-num">III</div>
+    <h1 class="rv t-hero">The Living.</h1>
+    <div style="height:clamp(1.2rem,3vw,2rem);"></div>
+    <p class="rv t-medium" style="max-width:480px;margin:0 auto;color:var(--dim);">Nothing false stands between you and truth. For the first time, you are operating from what is real. This is what life was supposed to be.</p>
+  </div>
+</section>
+
+<!-- WHAT HAPPENS -->
+<section class="section atm-shaft atm-hz" style="background:#09090b;">
+  <div class="sr l"></div>
+  <div class="section-inner">
+    <div class="rv voice-label" style="margin-bottom:1.8rem;">What Happens</div>
+    <p class="rv t-body mb drop-cap">The Golden World opens. Not as a concept. Not as a promise someone makes you. As the direct experience of your own life when the covering is no longer distorting it. This is what was supposed to be yours from the beginning. This is your birthright. Not something earned. Something returned.</p>
+    <p class="rv t-body mb">You are creating now from what is real rather than performing from what is false. The difference is total. Performance requires constant monitoring: how am I being perceived, what do they expect, am I doing it right. Creation requires none of that. Creation flows from the nature of the person doing the creating. When nothing false stands between you and your own nature, creation is what you do naturally.</p>
+    <p class="rv t-body mb">Internal Authority becomes your natural state. Not as a philosophy you adopted. Not as a stance you chose. As the simple, unavoidable consequence of seeing clearly. When you see truth directly, you do not need someone to interpret it for you. When you see through the lie of external authority, you cannot go back to obeying it. The need for it dissolves because the illusion that produced the need is gone.</p>
+    <p class="rv t-body">This is what The Gift of Sight makes possible. Once you see, you cannot unsee. And once you cannot unsee, you live differently. Not because you decided to. Because you are different.</p>
+  </div>
+</section>
+
+<!-- THE TEXTURE OF IT -->
+<section class="section atm-shaft" style="background:#08080a;">
+  <div class="sr l"></div>
+  <div class="sr r"></div>
+  <div class="section-inner">
+    <div class="rv voice-label" style="margin-bottom:1.8rem;">The Texture of It</div>
+    <p class="rv t-body mb drop-cap">Daily life does not become ecstatic. It does not become transcendent. It does not float above the ground. It becomes clear. That is the word for it. Clear.</p>
+    <p class="rv t-body mb">The static is gone. The constant background noise that the covering produced, the anxiety, the second guessing, the performing, the monitoring of how you are being received, all of it dissolves. What remains is presence. You are here. Fully. In the actual moment of your actual life. Not rehearsing the next one. Not replaying the last one. Here.</p>
+    <p class="rv t-body mb">Decisions become simpler. Not because the world becomes simpler. Because you see it clearly. When you are not filtering reality through layers of installed belief and inherited fear, what to do next is often obvious. The complexity was never in the situation. It was in the covering.</p>
+    <p class="rv t-body">Relationships change. They become real because The Performing Self is gone. You are no longer presenting a character to the world and hoping the character is accepted. You are present. The people who can meet you there will. The ones who cannot will fall away. Both of these outcomes are correct.</p>
+  </div>
+</section>
+
+<!-- NOT A DESTINATION -->
+<section class="section atm-hz" style="background:#0a0a0c;">
+  <div class="sr l"></div>
+  <div class="section-inner">
+    <div class="rv voice-label" style="margin-bottom:1.8rem;">Not a Destination</div>
+    <p class="rv t-body mb drop-cap">Living is not a state you achieve and then possess. It is not a finish line. There is no moment when you are done and the work is complete. The clearing continues. Sight deepens. New layers of the covering reveal themselves as you develop the capacity to see them. This is not failure. This is the nature of the process.</p>
+    <p class="rv t-body mb">But something has changed permanently. The fundamental relationship to truth has shifted and cannot shift back. You know what the covering is. You know what The Ground feels like. You know the difference between performing and creating, between obeying and seeing, between the false world and The Golden World. That knowledge does not expire.</p>
+    <p class="rv t-body">The Living is the way you move through the rest of your life. It is not a stage you complete. It is the stage you inhabit. Every morning you wake into it. Every decision you make from it. Every relationship you enter through it. It is not something you have. It is something you <span class="em">are.</span></p>
+  </div>
+</section>
+
+<!-- QUOTE -->
+<section class="section predawn atm-predawn" style="min-height:auto;padding-top:clamp(5rem,10vw,8rem);padding-bottom:clamp(5rem,10vw,8rem);">
+  <div class="section-inner" style="text-align:center;">
+    <div class="rv hr" style="margin-bottom:clamp(2rem,4vw,3rem);"></div>
+    <p class="rv pullquote">"The covered life is the only one most people will ever know. The uncovered life is the one you were born for. The difference between them is everything."</p>
+    <div class="rv hr" style="margin-top:clamp(2rem,4vw,3rem);"></div>
+  </div>
+</section>
+
+<!-- WHERE THIS LEADS -->
+<section class="section atm-hz" style="background:#0a0a0c;">
+  <div class="sr l"></div>
+  <div class="section-inner" style="text-align:center;">
+    <div class="rv voice-label" style="margin-bottom:1.8rem;">Where This Leads</div>
+    <p class="rv t-medium" style="max-width:500px;margin:0 auto 1.5em;color:var(--dim);">The path is yours now. It was always yours. The only difference is that now you know it.</p>
+    <p class="rv t-body" style="text-align:center;max-width:480px;margin:0 auto 2.5em;">If you have not yet begun, begin. If you are already walking, continue. The Ground does not move. Truth does not change. You will find your way back to it as many times as you need to. That is the promise of the path. It does not abandon you. It waits.</p>
+    <div class="rv">
+      <a href="/start-here/" class="way-link">Start Here</a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="way-footer">
+  <nav class="ftr-links">
+    <a href="/what-is-the-way/">What Is The Way</a>
+    <a href="/start-here/">Start Here</a>
+    <a href="/wallace-hamilton/">Wallace Hamilton</a>
+    <a href="/contact/">Contact</a>
+  </nav>
+  <div class="ftr-copy">&copy; 2026 Wallace Hamilton</div>
+</footer>
+
+<script>
+  const rvs = document.querySelectorAll('.rv');
+  const obs = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('vis');
+      }
+    });
+  }, { threshold: 0.15 });
+  rvs.forEach(el => obs.observe(el));
+</script>
+
+</body>
+</html>

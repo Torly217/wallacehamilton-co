@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Questions | The Way</title>
+<meta name="description" content="Common questions about The Way. What it is. What it is not. How to begin.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #060608;
+    --text: #d6d1c6;
+    --dim: #6e6960;
+    --warm: #c9b68a;
+    --warm2: #b8a070;
+    --warm-faint: rgba(201,182,138,0.04);
+    --light-bg: #f5f1e9;
+    --light-text: #1c1a17;
+    --light-dim: #908a7e;
+    --light-warm: #8e7a50;
+    --pre-bg: #18160f;
+    --pre-text: #d2ccbf;
+    --pre-dim: #7a7468;
+    --pre-warm: #b89e6e;
+    --serif: 'Cormorant Garamond', Georgia, serif;
+    --sans: 'DM Sans', sans-serif;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--serif);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  ::selection { background: var(--warm); color: var(--bg); }
+
+  /* Grain */
+  body::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    z-index: 200;
+    pointer-events: none;
+    opacity: 0.032;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    background-repeat: repeat;
+    background-size: 200px;
+  }
+
+  /* Nav */
+  .nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
+    padding: 1.4rem clamp(1.5rem, 5vw, 3.5rem);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: rgba(6,6,8,0.85);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(201,182,138,0.04);
+  }
+
+  .nav-logo {
+    font-family: var(--serif);
+    font-size: 1.1rem;
+    font-weight: 400;
+    letter-spacing: 0.04em;
+    color: var(--text);
+    text-decoration: none;
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 1.8rem;
+    align-items: center;
+  }
+
+  .nav-links a {
+    font-family: var(--sans);
+    font-size: 0.58rem;
+    font-weight: 400;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    text-decoration: none;
+    color: var(--dim);
+    transition: color 0.3s;
+  }
+
+  .nav-links a:hover { color: var(--text); }
+
+  @media (max-width: 768px) {
+    .nav-links { display: none; }
+  }
+
+  /* Sections */
+  section {
+    padding: clamp(5rem, 10vw, 8rem) clamp(1.5rem, 6vw, 5rem);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .narrow {
+    max-width: 660px;
+    width: 100%;
+    margin: 0 auto;
+  }
+
+  /* Atmospheres */
+  .atm-v::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse 60% 52% at 50% 50%, transparent 0%, rgba(6,6,8,0.75) 100%);
+    z-index: 1;
+    pointer-events: none;
+  }
+
+  .atm-orb::after {
+    content: '';
+    position: absolute;
+    width: 700px;
+    height: 700px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: radial-gradient(circle, rgba(201,182,138,0.05) 0%, transparent 60%);
+    z-index: 1;
+    pointer-events: none;
+    animation: breathe 9s ease-in-out infinite;
+  }
+
+  /* Side rules */
+  .sr {
+    position: absolute;
+    top: 10%;
+    width: 1px;
+    height: 80%;
+    z-index: 2;
+    pointer-events: none;
+  }
+  .sr.l { left: clamp(1rem, 5vw, 3.5rem); }
+  .sr.r { right: clamp(1rem, 5vw, 3.5rem); }
+  .sr::after {
+    content: '';
+    display: block;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to bottom, transparent, rgba(201,182,138,0.055), transparent);
+  }
+  @media (max-width: 768px) { .sr { display: none; } }
+
+  /* Typography */
+  .t-hero {
+    font-size: clamp(2.4rem, 6vw, 4.8rem);
+    font-weight: 300;
+    font-style: italic;
+    line-height: 1.25;
+    letter-spacing: 0.01em;
+  }
+
+  .t-body {
+    font-size: clamp(1.08rem, 2vw, 1.28rem);
+    font-weight: 300;
+    line-height: 2.1;
+    text-align: left;
+  }
+
+  .em { color: var(--warm); font-style: italic; }
+  .dim { color: var(--dim); }
+
+  .voice-label {
+    font-family: var(--sans);
+    font-weight: 400;
+    font-size: 0.58rem;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: var(--dim);
+  }
+
+  /* HR */
+  .hr {
+    width: 36px;
+    height: 1px;
+    background: linear-gradient(to right, transparent, var(--warm2), transparent);
+    margin: 0 auto;
+    opacity: 0.45;
+  }
+
+  /* Light */
+  .bg-light {
+    background: var(--light-bg);
+    color: var(--light-text);
+  }
+  .bg-light .em { color: var(--light-warm); }
+  .bg-light .dim { color: var(--light-dim); }
+  .bg-light .hr {
+    background: linear-gradient(to right, transparent, var(--light-warm), transparent);
+    opacity: 0.25;
+  }
+
+  /* Scroll reveal */
+  .rv {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1),
+                transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .rv.vis { opacity: 1; transform: translateY(0); }
+  .rv.d1 { transition-delay: 0.08s; }
+  .rv.d2 { transition-delay: 0.16s; }
+
+  /* Q&A */
+  .qa-item {
+    padding-bottom: clamp(2.5rem, 4vw, 3.5rem);
+    margin-bottom: clamp(2.5rem, 4vw, 3.5rem);
+    border-bottom: 1px solid rgba(201,182,138,0.06);
+  }
+
+  .qa-item:last-child {
+    border-bottom: none;
+    margin-bottom: 0;
+    padding-bottom: 0;
+  }
+
+  .qa-q {
+    font-size: clamp(1.2rem, 2.2vw, 1.5rem);
+    font-weight: 400;
+    color: var(--warm);
+    margin-bottom: 1.2rem;
+    line-height: 1.5;
+  }
+
+  .qa-a {
+    font-size: clamp(1.02rem, 1.8vw, 1.18rem);
+    font-weight: 300;
+    line-height: 2;
+    color: var(--text);
+  }
+
+  .qa-a + .qa-a {
+    margin-top: 1em;
+  }
+
+  /* Footer */
+  .ftr-links {
+    display: flex;
+    gap: 1.5rem;
+    margin-top: 2.2rem;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  .ftr-links a {
+    font-family: var(--sans);
+    font-size: 0.55rem;
+    font-weight: 400;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    text-decoration: none;
+    color: var(--light-dim);
+    transition: color 0.3s;
+  }
+  .ftr-links a:hover { color: var(--light-text); }
+
+  .ftr-copy {
+    font-family: var(--sans);
+    font-size: 0.5rem;
+    font-weight: 300;
+    color: var(--light-dim);
+    margin-top: 0.8rem;
+    opacity: 0.35;
+  }
+
+  @keyframes breathe {
+    0%, 100% { opacity: 1; transform: translate(-50%,-50%) scale(1); }
+    50% { opacity: 0.55; transform: translate(-50%,-50%) scale(1.1); }
+  }
+</style>
+</head>
+<body>
+
+<!-- Nav -->
+<nav class="nav">
+  <a href="/" class="nav-logo">The Way</a>
+  <div class="nav-links">
+    <a href="/">Home</a>
+    <a href="/what-is-the-way/">What Is The Way</a>
+    <a href="/how-it-works/">How It Works</a>
+    <a href="/start-here/">Start Here</a>
+    <a href="/wallace-hamilton/">Wallace Hamilton</a>
+    <a href="/watch/">Watch</a>
+  </div>
+</nav>
+
+<!-- Hero -->
+<section class="atm-v atm-orb" style="background:#060608;padding-top:clamp(8rem,14vw,12rem);min-height:45vh;display:flex;align-items:center;">
+  <div class="sr l"></div>
+  <div class="sr r"></div>
+  <div class="narrow" style="text-align:center;position:relative;z-index:3;">
+    <h1 class="rv t-hero">Questions</h1>
+    <div class="rv d1 hr" style="margin:1.8rem auto;"></div>
+    <p class="rv d2 t-body" style="text-align:center;max-width:440px;margin:0 auto;color:var(--dim);">Honest questions deserve honest answers. Here are the ones people ask most.</p>
+  </div>
+</section>
+
+<!-- Q&A -->
+<section style="background:#09090b;">
+  <div class="sr l"></div>
+  <div class="narrow" style="position:relative;z-index:3;">
+
+    <div class="qa-item rv">
+      <h3 class="qa-q">What is The Way?</h3>
+      <p class="qa-a">A path of removal. The Way does not add anything to you. It removes what was placed over you: the beliefs, conditioning, and inherited patterns that stand between you and direct sight. It is not a belief system. It is not self help. It is the process of uncovering what was always there.</p>
+    </div>
+
+    <div class="qa-item rv">
+      <h3 class="qa-q">Is this a course or program?</h3>
+      <p class="qa-a">No. The Way is not a product. There are no modules to complete, no certifications to earn, no levels to advance through. It is a living process. You encounter the truth, and the truth does its work on you. The form it takes is direct transmission: voice, text, presence.</p>
+    </div>
+
+    <div class="qa-item rv">
+      <h3 class="qa-q">Who is Wallace Hamilton?</h3>
+      <p class="qa-a">The voice of The Way. A third generation transmitter of an understanding that was built over fifty years of independent work. He did not invent this. He inherited it, walked it himself, and now speaks it in a form that meets people where they are today. He names the wound. He points to the path. He is not above anyone walking The Way. He is walking it himself.</p>
+    </div>
+
+    <div class="qa-item rv">
+      <h3 class="qa-q">How long does it take?</h3>
+      <p class="qa-a">Waking can happen in a moment. A single sentence can collapse the entire structure you have been living inside. The clearing continues throughout your life. There is no finish line. There is only deeper ground, and you walk it at your own pace.</p>
+    </div>
+
+    <div class="qa-item rv">
+      <h3 class="qa-q">Do I need to believe anything?</h3>
+      <p class="qa-a">No. The Way removes beliefs. It does not install new ones. You are not asked to accept a doctrine, adopt a worldview, or trust an authority. You are asked to look. What you see when the covering comes off is yours. No one stands between you and that.</p>
+    </div>
+
+    <div class="qa-item rv">
+      <h3 class="qa-q">Is this therapy?</h3>
+      <p class="qa-a">No. Therapy works within the existing structure. It helps you manage the self you were given. The Way removes the structure. It does not optimize the performing self; it dissolves the performing self so the real one can surface. These are fundamentally different operations.</p>
+    </div>
+
+    <div class="qa-item rv">
+      <h3 class="qa-q">What are the three stages?</h3>
+      <p class="qa-a">Waking, Clearing, and Living. They are not steps to complete in sequence. They are dimensions of a single process. Waking is the recognition that the covering exists. Clearing is the removal of what is false. Living is operating from what is real. You move through all three simultaneously, and you return to each one at deeper levels as you go.</p>
+    </div>
+
+    <div class="qa-item rv">
+      <h3 class="qa-q">How do I start?</h3>
+      <p class="qa-a">Go to <a href="/start-here/" style="color:var(--warm);text-decoration:none;border-bottom:1px solid rgba(201,182,138,0.2);">Start Here</a>. Watch. Listen. Begin. The Way does not require preparation. It requires honesty. If you are willing to look at what is actually there, you are already ready.</p>
+    </div>
+
+    <div class="qa-item rv">
+      <h3 class="qa-q">Is there a community?</h3>
+      <p class="qa-a">There are others walking this path. You are not alone in this. But The Way is not a group identity. It does not ask you to belong to anything. The connection between people who have seen through the covering is real, and it happens naturally. You will recognize others when you meet them.</p>
+    </div>
+
+    <div class="qa-item rv">
+      <h3 class="qa-q">Does this cost anything?</h3>
+      <p class="qa-a">The Way is free. The teachings are free. The videos, the writing, the transmission. All of it is given. What you do with it is yours.</p>
+    </div>
+
+  </div>
+</section>
+
+<!-- Footer -->
+<section class="bg-light" style="padding:clamp(3rem,6vw,5rem) clamp(1.5rem,6vw,5rem);text-align:center;">
+  <div class="narrow" style="position:relative;z-index:3;">
+    <nav class="ftr-links" style="margin-top:0;">
+      <a href="/what-is-the-way/">What Is The Way</a>
+      <a href="/start-here/">Start Here</a>
+      <a href="/wallace-hamilton/">Wallace Hamilton</a>
+      <a href="/contact/">Contact</a>
+    </nav>
+    <div class="ftr-copy">&copy; 2026 Wallace Hamilton</div>
+  </div>
+</section>
+
+<script>
+  const obs = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) e.target.classList.add('vis');
+    });
+  }, { threshold: 0.15 });
+  document.querySelectorAll('.rv').forEach(el => obs.observe(el));
+</script>
+
+</body>
+</html>
