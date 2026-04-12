@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Contact | The Way</title>
+<meta name="description" content="Reach out to Wallace Hamilton.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #060608;
+    --text: #d6d1c6;
+    --dim: #6e6960;
+    --warm: #c9b68a;
+    --warm2: #b8a070;
+    --light-bg: #f5f1e9;
+    --light-text: #1c1a17;
+    --light-dim: #908a7e;
+    --light-warm: #8e7a50;
+    --serif: 'Cormorant Garamond', Georgia, serif;
+    --sans: 'DM Sans', sans-serif;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--serif);
+    -webkit-font-smoothing: antialiased;
+    min-height: 100vh;
+  }
+
+  ::selection { background: var(--warm); color: var(--bg); }
+
+  body::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    z-index: 200;
+    pointer-events: none;
+    opacity: 0.032;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    background-repeat: repeat;
+    background-size: 200px;
+  }
+
+  /* Nav */
+  .nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: clamp(1.2rem, 3vw, 2.2rem);
+    padding: 1.4rem 1.5rem;
+    background: rgba(6,6,8,0.85);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+  }
+  .nav a {
+    font-family: var(--sans);
+    font-size: 0.55rem;
+    font-weight: 400;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    text-decoration: none;
+    color: rgba(214,209,198,0.45);
+    transition: color 0.3s;
+  }
+  .nav a:hover { color: var(--text); }
+  .nav a.active { color: var(--warm); }
+  @media (max-width: 600px) {
+    .nav { gap: 0.8rem; flex-wrap: wrap; padding: 1rem 0.8rem; }
+    .nav a { font-size: 0.48rem; }
+  }
+
+  /* Main */
+  .main {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: clamp(6rem, 12vw, 10rem) clamp(1.5rem, 6vw, 5rem) clamp(4rem, 8vw, 6rem);
+  }
+
+  .inner {
+    max-width: 520px;
+    width: 100%;
+  }
+
+  /* Side rule */
+  .sr {
+    position: fixed;
+    top: 10%; width: 1px; height: 80%; z-index: 2; pointer-events: none;
+  }
+  .sr.l { left: clamp(1rem, 5vw, 3.5rem); }
+  .sr.r { right: clamp(1rem, 5vw, 3.5rem); }
+  .sr::after {
+    content: ''; display: block; width: 100%; height: 100%;
+    background: linear-gradient(to bottom, transparent, rgba(201,182,138,0.055), transparent);
+  }
+  @media (max-width: 768px) { .sr { display: none; } }
+
+  /* Typography */
+  .heading {
+    font-size: clamp(2rem, 5vw, 3.2rem);
+    font-weight: 300;
+    font-style: italic;
+    letter-spacing: 0.02em;
+    margin-bottom: 0.5rem;
+  }
+  .subheading {
+    font-family: var(--sans);
+    font-size: 0.72rem;
+    font-weight: 300;
+    color: var(--dim);
+    letter-spacing: 0.06em;
+    margin-bottom: clamp(2rem, 4vw, 3rem);
+  }
+
+  /* Form */
+  .form { display: flex; flex-direction: column; gap: 0.9rem; }
+
+  .field { display: flex; flex-direction: column; gap: 0.35rem; }
+  .label {
+    font-family: var(--sans);
+    font-size: 0.52rem;
+    font-weight: 400;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--dim);
+  }
+  .input {
+    padding: 0.8rem 0;
+    background: transparent;
+    border: none;
+    border-bottom: 1px solid rgba(214,209,198,0.1);
+    color: var(--text);
+    font-family: var(--serif);
+    font-size: 1rem;
+    font-weight: 300;
+    outline: none;
+    transition: border-color 0.3s;
+    width: 100%;
+  }
+  .input::placeholder { color: rgba(214,209,198,0.2); }
+  .input:focus { border-bottom-color: rgba(201,182,138,0.35); }
+
+  textarea.input {
+    resize: none;
+    height: 120px;
+    line-height: 1.8;
+  }
+
+  .btn {
+    margin-top: 0.6rem;
+    padding: 0.85rem;
+    background: transparent;
+    border: 1px solid rgba(201,182,138,0.2);
+    color: var(--warm);
+    font-family: var(--sans);
+    font-weight: 400;
+    font-size: 0.55rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: background 0.3s, color 0.3s;
+    align-self: flex-start;
+    padding-left: 2rem;
+    padding-right: 2rem;
+  }
+  .btn:hover { background: rgba(201,182,138,0.06); }
+  .btn:disabled { opacity: 0.4; cursor: default; }
+
+  .note {
+    font-family: var(--sans);
+    font-size: 0.6rem;
+    font-weight: 300;
+    color: var(--dim);
+    margin-top: 1rem;
+    min-height: 1em;
+  }
+  .note.success { color: var(--warm); }
+  .note.error { color: #c47a6a; }
+
+  /* Success state */
+  .success-state {
+    display: none;
+    text-align: center;
+    padding: 2rem 0;
+  }
+  .success-state.visible { display: block; }
+  .success-title {
+    font-size: clamp(1.6rem, 3.5vw, 2.4rem);
+    font-weight: 300;
+    font-style: italic;
+    margin-bottom: 0.8rem;
+  }
+  .success-sub {
+    font-family: var(--sans);
+    font-size: 0.72rem;
+    font-weight: 300;
+    color: var(--dim);
+    letter-spacing: 0.06em;
+  }
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <a href="/">Home</a>
+  <a href="/what-is-the-way">What Is The Way</a>
+  <a href="/how-it-works">How It Works</a>
+  <a href="/start-here">Start Here</a>
+  <a href="/wallace-hamilton">Wallace Hamilton</a>
+  <a href="/watch">Watch</a>
+</nav>
+
+<div class="sr l"></div>
+<div class="sr r"></div>
+
+<main class="main">
+  <div class="inner">
+
+    <div id="form-wrap">
+      <div class="heading">Say something.</div>
+      <div class="subheading">Wallace reads everything.</div>
+
+      <form class="form" id="contact-form">
+        <div class="field">
+          <label class="label" for="name">Name</label>
+          <input class="input" type="text" id="name" name="name" placeholder="Your name" required>
+        </div>
+        <div class="field">
+          <label class="label" for="email">Email</label>
+          <input class="input" type="email" id="email" name="email" placeholder="Your email" required>
+        </div>
+        <div class="field">
+          <label class="label" for="message">Message</label>
+          <textarea class="input" id="message" name="message" placeholder="What's on your mind?" required></textarea>
+        </div>
+        <button class="btn" type="submit">Send</button>
+        <div class="note" id="contact-note"></div>
+      </form>
+    </div>
+
+    <div class="success-state" id="success-state">
+      <div class="success-title">Received.</div>
+      <div class="success-sub">Wallace will read it.</div>
+    </div>
+
+  </div>
+</main>
+
+<script>
+  const form = document.getElementById('contact-form');
+  const note = document.getElementById('contact-note');
+  const btn = form.querySelector('button');
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    btn.textContent = '...';
+    btn.disabled = true;
+    note.textContent = '';
+    note.className = 'note';
+
+    const body = {
+      name: form.name.value.trim(),
+      email: form.email.value.trim(),
+      message: form.message.value.trim(),
+    };
+
+    try {
+      const res = await fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(body),
+      });
+      if (res.ok) {
+        document.getElementById('form-wrap').style.display = 'none';
+        document.getElementById('success-state').classList.add('visible');
+      } else {
+        throw new Error();
+      }
+    } catch {
+      btn.textContent = 'Send';
+      btn.disabled = false;
+      note.textContent = 'Something went wrong. Please try again.';
+      note.className = 'note error';
+    }
+  });
+</script>
+
+</body>
+</html>
