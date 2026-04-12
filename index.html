@@ -533,9 +533,55 @@
     0%, 100% { opacity: 1; transform: translate(-50%,-50%) scale(1); }
     50% { opacity: 0.55; transform: translate(-50%,-50%) scale(1.1); }
   }
+
+  /* ============================================
+     NAVIGATION
+  ============================================ */
+  .nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: clamp(1.2rem, 3vw, 2.2rem);
+    padding: 1.4rem 1.5rem;
+    background: rgba(6,6,8,0.85);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+  }
+
+  .nav a {
+    font-family: var(--sans);
+    font-size: 0.55rem;
+    font-weight: 400;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    text-decoration: none;
+    color: rgba(214,209,198,0.45);
+    transition: color 0.3s;
+  }
+  .nav a:hover { color: var(--text); }
+  .nav a.active { color: var(--warm); }
+
+  @media (max-width: 600px) {
+    .nav { gap: 0.8rem; flex-wrap: wrap; padding: 1rem 0.8rem; }
+    .nav a { font-size: 0.48rem; }
+  }
 </style>
 </head>
 <body>
+
+<nav class="nav">
+  <a href="/" class="active">Home</a>
+  <a href="/what-is-the-way/">What Is The Way</a>
+  <a href="/how-it-works/">How It Works</a>
+  <a href="/start-here/">Start Here</a>
+  <a href="/wallace-hamilton/">Wallace Hamilton</a>
+  <a href="/watch/">Watch</a>
+</nav>
 
 <div class="sc" id="sc">
 
