@@ -274,6 +274,19 @@
   .mb { margin-bottom: 1.5em; }
   .mb-sm { margin-bottom: 0.85em; }
 
+  /* Section eyebrow — small uppercase signpost above a panel's content. */
+  .eyebrow {
+    font-family: var(--sans);
+    font-size: clamp(0.66rem, 0.85vw, 0.78rem);
+    font-weight: 500;
+    letter-spacing: 0.32em;
+    text-transform: uppercase;
+    color: var(--warm);
+    display: block;
+    margin-bottom: clamp(1.4rem, 3vw, 2.2rem);
+  }
+  .bg-light .eyebrow { color: var(--light-warm); }
+
   /* Drop cap */
   .drop-cap::first-letter {
     font-size: 3.4em;
@@ -678,6 +691,7 @@
   <!-- 7 — DECLARATION (LIGHT) -->
   <section class="p bg-light atm-lum" data-theme="light">
     <div class="p-inner" style="text-align:center;">
+      <span class="a eyebrow">The Return</span>
       <p class="a t-statement mb-sm">You were never broken.</p>
       <p class="a t-statement mb-sm">The world taught you to live as if you were.</p>
       <p class="a t-statement mb-sm">That was the covering.</p>
